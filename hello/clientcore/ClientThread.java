@@ -1,6 +1,10 @@
 package hello.clientcore;
 
+import hello.client.ui.MainPanel;
 import hello.client.ui.QqChat;
+import hello.client.ui.找回密码;
+import hello.client.ui.注册界面;
+import hello.client.ui.登录界面;
 import hello.common.TranObject;
 import hello.common.TranObjectType;
 import hello.test.ClientTest;
@@ -32,13 +36,44 @@ public class ClientThread extends Thread{
 		while(isStart){
 			if(in.isMessageLin()){
 				TranObject message = in.getMessage();
-				TranObjectType str ;
 				if(message != null){
 					switch(message.getType()){
 					case REGISTER:
-						System.out.println(message.getObject());
-						ClientTest  clietTest = (ClientTest) ChatMap.getChatMap("1");
-						clietTest.showMessage(message);
+						注册界面 RegisterFrame = new 注册界面();
+						RegisterFrame = (注册界面)ThreadMap.getThreadMap("RegisterFrame");
+						
+						if("rbid".equals(message.getCmd())){
+							RegisterFrame.setRbidTxt((String) message.getObject());
+						}else if("txts".equals(message.getCmd())) {
+							RegisterFrame.setTxtstxt((String) message.getObject());
+						}
+						
+						break;
+					case LOGIN:
+						登录界面 loginFrame = (登录界面)ThreadMap.getThreadMap("loginFrame");
+						loginFrame.setRbpwdTxt("");
+						loginFrame.setRbidTxt("");
+						System.out.println(message.getCmd());
+						if("true".equals(message.getCmd())){
+							//  登录成功
+							System.out.println(2);
+							loginFrame.dispose();
+							MainPanel mainpanel = new MainPanel();//新建好友列表页面
+							
+							
+							
+						}else if("rbpwd".equals(message.getCmd())){
+							loginFrame.setRbpwdTxt("密码错误");
+							System.out.println(3);
+						}else {
+							loginFrame.setRbidTxt("账号不存在");
+							System.out.println(4);
+						}
+						break;
+						
+					case FORGETPWD:
+						找回密码 forgetPwd = (找回密码)ThreadMap.getThreadMap("fotgetPwd");
+						forgetPwd.setJxgTxt((String) message.getObject());
 						break;
 					case MESSAGE:
 						

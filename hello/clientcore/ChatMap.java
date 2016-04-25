@@ -7,15 +7,7 @@ import java.util.Map;
 
 public class ChatMap {
 	private static Map<String , Object> chatMap = new HashMap<String , Object> ();
-	
 
-	public static Map getChatMap() {
-		return chatMap;
-	}
-
-	public static void setChatMap(Map chatMap) {
-		ChatMap.chatMap = chatMap;
-	}
 	public static Object getChatMap(String id){
 
 		return chatMap.get(id);

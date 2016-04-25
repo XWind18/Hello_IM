@@ -12,7 +12,7 @@ public class InputThread extends Thread{
 	private ObjectInputStream ois;
 	private TranObject message;
 	private boolean isStart;
-	private MessageListener messageListener;
+
 	private boolean messageLin = false;
 	
 
@@ -42,9 +42,6 @@ public class InputThread extends Thread{
 	}
 
 	
-	public MessageListener getMessageListener() {
-		return messageListener;
-	}
 
 
 

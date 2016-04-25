@@ -2,12 +2,17 @@ package hello.Servercore;
 
 import hello.common.TranObject;
 import hello.common.TranObjectType;
-import hello.dao.MemberDao;
+import hello.dao.手机dao;
+import hello.dao.改密码dao;
+import hello.dao.注册dao;
+import hello.dao.登录dao;
 import hello.entity.Member;
+import hello.util.JDBCUtils;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
+import java.util.List;
 
 
 
@@ -60,19 +65,95 @@ public class InputThread extends Thread{
 		TranObjectType tType = readObject.getType();
 		switch(tType){
 		case REGISTER:
-			
-			String  send = new MemberDao().query();
-			TranObject<String> object = new TranObject<String>();
-			object.setObject(send);
-			object.setType(TranObjectType.REGISTER);
-			out.setMessage(object);
+			Member memberReg = (Member)readObject.getObject();
+			TranObject objReg = new TranObject();
+			System.out.println(12);
+			注册dao daoRegister = new 注册dao();
+			手机dao daoPhone = new 手机dao();
+			boolean yz = daoPhone.yanzheng(memberReg.getPhone());
+			String ti1 = yz ? "该手机号已注册" : "";
+			if (yz) {
+				objReg.setCmd("rbid");	
+				System.out.println(2);
+			} else {
+				boolean saveFlag = daoRegister.inSert(memberReg.getName(), memberReg.getLoginPwd(),
+						memberReg.getSex(), memberReg.getAge(), memberReg.getPhone());
+				objReg.setCmd("txts");
+				if (saveFlag) {
+					objReg.setObject("注册成功");
+					System.out.println(3);
+				} else {
+					objReg.setObject("注册失败");
+					System.out.println(4);
+				}
+			}
+
+		
 			break;
 		case LOGIN:
-			Member member = new Member();
-			
-			
-			
+			Member member = (Member) readObject.getObject();
+			TranObject sendObject = new TranObject();
+			sendObject.setType(TranObjectType.LOGIN);
+			登录dao dao = new 登录dao();
+			String pwd = dao.Select(member.getPhone());
+			boolean ph = dao.phone(member.getPhone());
+			if (ph) {
+				
+				if (pwd.equals(member.getLoginPwd())) {
+					System.out.println("登录成功");
+					sendObject.setCmd("true");
+					sendObject.setObject("登录成功");
+					Member memLogin = JDBCUtils.queryForObject("select * from member where phone = ?", Member.class, member.getPhone());
+					memLogin.setLoginPwd("");
+					sendObject.setObject(memLogin);
+					out.setMessage(sendObject);
+					
+					//登录成功处理事件,通知好友上线
+					TranObject loginmessage = new TranObject();
+					loginmessage.setType(TranObjectType.FRIENDLOGIN);
+					loginmessage.setObject(memLogin);
+					List<OutputThread> list = map.getAll();
+					for (OutputThread outputThread : list) {
+						outputThread.setMessage(loginmessage);
+					}
+					map.add(memLogin.getMemberId(), out);
+					
+					//  获取在线好友
+					TranObject getOnlineFriend = new TranObject();
+					getOnlineFriend.setType(TranObjectType.LOGIN);
+					getOnlineFriend.setObject(FriendList.getFriendListAll());
+					out.setMessage(getOnlineFriend);
+					
+					
+					FriendList.addFriendList(memLogin);
+					
+				} else {
+					sendObject.setCmd("rbpwd");
+					sendObject.setObject("密码错误");
+					out.setMessage(sendObject);
+				}
+			} else {
+				sendObject.setCmd("rbid");
+				sendObject.setObject("账号不存在");
+				out.setMessage(sendObject);
+			}
+			break;
+		case FORGETPWD:
+			Member memForgetPwd = (Member)readObject.getObject();
+			TranObject ForgetPwdObject = new TranObject();
+			改密码dao daoForget = new 改密码dao();
+			boolean gm = daoForget.upDate(memForgetPwd.getLoginPwd(), memForgetPwd.getPhone());
+			ForgetPwdObject.setCmd("jxg");
+			if (gm) {
+				ForgetPwdObject.setObject("修改成功");
+			} else {
+				ForgetPwdObject.setObject("修改失败");
+			}
+			out.setMessage(ForgetPwdObject);
 
+			
+			
+			
 			break;
 		case MESSAGE:
 			out.setMessage(readObject);

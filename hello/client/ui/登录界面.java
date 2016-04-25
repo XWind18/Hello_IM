@@ -10,7 +10,8 @@ import hello.clientcore.ChatMap;
 import hello.clientcore.Client;
 import hello.clientcore.ThreadMap;
 import hello.common.Constants;
-import hello.dao.登录dao;
+import hello.common.TranObject;
+import hello.common.TranObjectType;
 import hello.entity.Member;
 
 /**
@@ -240,24 +241,23 @@ public class 登录界面 extends javax.swing.JFrame {
 	}// </editor-fold>
 	//GEN-END:initComponents
 
-	private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {
-		// TODO add your handling code here:
-		new 登录界面().setVisible(true);
-		this.dispose();
-	}
+	
 
 	private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {
-		// TODO add your handling code here:
-		new 找回密码().setVisible(true);
-		this.dispose();
+		找回密码 forgetPwd = new 找回密码();
+		forgetPwd.setVisible(true);
+		ThreadMap.addThreadMap("forgetPwd", forgetPwd);
+		this.setVisible(false);
 	}
 
 	private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
 		// TODO add your handling code here:
 
 		//		注册
-		new 注册界面().setVisible(true);
-		this.dispose();
+		注册界面 RegisterFrame = new 注册界面();
+		RegisterFrame.setVisible(true);
+		ThreadMap.addThreadMap("RegisterFrame", RegisterFrame);
+		this.setVisible(false);
 
 	}
 
@@ -273,26 +273,13 @@ public class 登录界面 extends javax.swing.JFrame {
 		member.setPhone(phone);
 		member.setLoginPwd(password);
 
+		TranObject sendObject = new TranObject();
+		sendObject.setType(TranObjectType.LOGIN);
+		sendObject.setObject(member);
 		
-		登录dao dao = new 登录dao();
-
-		String pwd = dao.Select(phone);
-		boolean ph = dao.phone(phone);
-		if (ph) {
-			if (pwd.equals(password)) {
-				System.out.println("登录成功");
-				
-//				下一行补充代码打开登录后界面
-				
-				this.dispose();
-				
-			} else {
-				this.rbpwd.setText("密码错误");
-			}
-		} else {
-			this.rbid.setText("账号不存在");
-		}
-	}
+		Client client = (Client)ChatMap.getChatMap("client");
+		client.getOutputThread().setmessage(sendObject);
+	}	
 
 	/**
 	 * @param args the command line arguments
@@ -326,5 +313,15 @@ public class 登录界面 extends javax.swing.JFrame {
 	private javax.swing.JTextField txtid;
 	private javax.swing.JPasswordField txtpwd;
 	// End of variables declaration//GEN-END:variables
+	public void setRbidTxt(String str) {
+		this.rbid.setText(str);
+	}
+
+	public void setRbpwdTxt(String str) {
+		this.rbpwd.setText(str);
+	}
+	
+	
 
 }
+

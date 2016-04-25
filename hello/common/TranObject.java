@@ -20,7 +20,14 @@ public class TranObject<T> implements Serializable {
     private T object;// 传输的对象，这个对象我们可以自定义任何  
     private List<Integer> group;// 群发给哪些用户  
     private String sendTime;
+    private String cmd;
     
+	public String getCmd() {
+		return cmd;
+	}
+	public void setCmd(String cmd) {
+		this.cmd = cmd;
+	}
 	public TranObjectType getType() {
 		return type;
 	}

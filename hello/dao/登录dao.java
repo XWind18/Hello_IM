@@ -33,12 +33,12 @@ public class 登录dao {
 		String pwd = null;
 		try {
 			con = JDBCUtils.getConnection();
-			ps =  con.prepareStatement("select password from t_zhuce where phone=?");
+			ps =  con.prepareStatement("select loginPwd from member where phone=?");
 			ps.setString(1, phone);
 			rs = ps.executeQuery();
 			
 			while(rs.next()){
-				pwd = rs.getString("password");
+				pwd = rs.getString("loginPwd");
 				
 			}
 		} catch (Exception e1) {
@@ -57,7 +57,7 @@ public class 登录dao {
 		String phon = null;
 		try {
 			con = JDBCUtils.getConnection();
-			ps =  con.prepareStatement("select phone from t_zhuce");
+			ps =  con.prepareStatement("select phone from member");
 //			ps.setString(1, phone);
 			rs = ps.executeQuery();
 			

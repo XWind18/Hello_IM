@@ -5,6 +5,7 @@ import java.io.Serializable;
 public enum TranObjectType {
 	
 	REGISTER, // 注册  
+	FORGETPWD, //忘记密码
     LOGIN, // 用户登录  
     LOGOUT, // 用户退出登录  
     FRIENDLOGIN, // 好友上线  

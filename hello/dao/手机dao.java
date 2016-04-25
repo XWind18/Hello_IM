@@ -30,14 +30,17 @@ public class 手机dao {
 		try {
 			con = JDBCUtils.getConnection();
 			st = con.createStatement();
-			rs = st.executeQuery("select * from t_zhuce");
+			rs = st.executeQuery("select * from member");
 			while(rs.next()){
 				String phone =rs.getString("phone");
-				if(phone.equals(i)){
+				if(phone != null){
+					if(phone.equals(i)){
+						
+						flag = true;
+					}else{
+						flag = false;
+					}
 					
-					flag = true;
-				}else{
-					flag = false;
 				}
 			}
 			

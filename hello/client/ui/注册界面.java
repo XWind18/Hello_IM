@@ -6,8 +6,14 @@
 
 package hello.client.ui;
 
+import hello.clientcore.ChatMap;
+import hello.clientcore.Client;
+import hello.clientcore.ThreadMap;
+import hello.common.TranObject;
+import hello.common.TranObjectType;
 import hello.dao.手机dao;
 import hello.dao.注册dao;
+import hello.entity.Member;
 
 /**
  *
@@ -452,8 +458,9 @@ public class 注册界面 extends javax.swing.JFrame {
 
 	private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {
 		// TODO add your handling code here:
-		new 登录界面().setVisible(true);
 		this.dispose();
+		登录界面 loginFrame = (登录界面)ThreadMap.getThreadMap("loginFrame");
+		loginFrame.setVisible(true);
 
 	}
 
@@ -490,6 +497,11 @@ public class 注册界面 extends javax.swing.JFrame {
 		//		} else {
 		//
 		//		}
+		Member member = new Member();
+		this.rbid.setText("");
+		this.rbpwd.setText("");
+		this.txts.setText("");
+		
 		try {
 			String name = null;
 			String pwd = null;
@@ -497,9 +509,6 @@ public class 注册界面 extends javax.swing.JFrame {
 			String phone = null;
 			int age = 0;
 			String sex = null;
-			注册dao dao = new 注册dao();
-			手机dao da = new 手机dao();
-			//		try{
 			if (this.rbboy.isSelected()) {
 				sex = "男";
 			} else {
@@ -509,67 +518,64 @@ public class 注册界面 extends javax.swing.JFrame {
 			pwd = this.txtpwd.getText().toString();
 			newpwd = this.txtnewpwd.getText().toString();
 			age = Integer.parseInt(this.txtage.getText());
-
-			String ph = this.txtid.getText().toString();
-
-			boolean yz = da.yanzheng(ph);
-			String ti1 = yz ? "该手机号已注册" : "";
-
-			if (yz) {
-				this.rbid.setText(ti1);
-				phone = null;
-			} else {
-				phone = ph;
-			}
-
-			boolean sh = da.shouji(phone);
-//			System.out.println(phone);
-//			System.out.println(sh);
-			String ti2 = sh ? "" : "手机号码出错";
-			if (sh == true) {
-
-			} else {
-				this.rbid.setText(ti2);
-				phone = null;
-
-			}
-
-			if (pwd.equals(newpwd)) {
-
+			phone = this.txtid.getText().toString();
+			if (pwd.equals(newpwd)) {	
+				member.setLoginPwd(pwd);	
 			} else {
 				this.rbpwd.setText("两次密码不一样");
 				pwd = null;
+				return;
 			}
-
-			boolean saveFlag = dao.inSert(name, pwd, sex, age, phone);
-			if (saveFlag) {
-				this.txts.setText("注册成功");
-//				new 登录界面().setVisible(true);
-//				this.dispose();
+			注册dao dao = new 注册dao();
+			手机dao da = new 手机dao();
+			boolean sh = da.shouji(phone);
+			String ti2 = sh ? "" : "手机号码出错";
+			if (sh) {
+				member.setPhone(phone);
 			} else {
-				this.txts.setText("注册失败");
-
+				this.rbid.setText(ti2);
+				phone = null;
+				return;
 			}
+			member.setSex(sex);
+			member.setName(name);
+			member.setAge(age);
+			
+			TranObject sendObject = new TranObject();
+			sendObject.setType(TranObjectType.REGISTER);
+			sendObject.setObject(member);
+			
+			Client client = (Client)ChatMap.getChatMap("client");
+			client.getOutputThread().setmessage(sendObject);
+
+			
+//			boolean saveFlag = dao.inSert(name, pwd, sex, age, phone);
+//			if (saveFlag) {
+//				this.txts.setText("注册成功");
+////				new 登录界面().setVisible(true);
+////				this.dispose();
+//			} else {
+//				this.txts.setText("注册失败");
+//
+//			}
 		} catch (Exception e) {
 			// TODO: handle exception
 //			System.out.println("注册失败");
+			e.printStackTrace();
 
 		}
-		//		}catch (Exception e) {
-		//			System.out.println("创建失败");
-		//		}
 	}
 
 	/**
 	 * @param args the command line arguments
 	 */
-	public static void main(String args[]) {
-		java.awt.EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				new 注册界面().setVisible(true);
-			}
-		});
-	}
+//	public static void main(String args[]) {
+//		java.awt.EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				new 注册界面().setVisible(true);
+//			}
+//		});
+//	}
 
 	//GEN-BEGIN:variables
 	// Variables declaration - do not modify
@@ -595,5 +601,14 @@ public class 注册界面 extends javax.swing.JFrame {
 	private javax.swing.JPasswordField txtpwd;
 	private javax.swing.JLabel txts;
 	// End of variables declaration//GEN-END:variables
+	public void setRbidTxt(String str) {
+		this.rbid.setText(str);
+	}
 
+	public void setRbpwdTxt(String str) {
+		this.rbpwd.setText(str);
+	}
+	public void setTxtstxt (String str){
+		this.txts.setText(str);
+	}
 }

@@ -13,7 +13,7 @@ public class 改密码dao {
 		PreparedStatement st = null;
 		con = JDBCUtils.getConnection();
 		
-		String sql = "update t_zhuce set password=? where phone=?";
+		String sql = "update member set loginPwd=? where phone=?";
 //		UPDATE t_user SET password=123 WHERE id=3;	修改
 		try {
 			st = con.prepareStatement(sql);
@@ -30,7 +30,7 @@ public class 改密码dao {
 		Connection con = null;
 		PreparedStatement st = null;
 		con = JDBCUtils.getConnection();
-		String sql = "update t_zhuce set password=? where phone=?";
+		String sql = "update member set loginPwd=? where phone=?";
 		
 		try {
 			st = con.prepareStatement(sql);

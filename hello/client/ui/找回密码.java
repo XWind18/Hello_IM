@@ -6,7 +6,13 @@
 
 package hello.client.ui;
 
+import hello.clientcore.ChatMap;
+import hello.clientcore.Client;
+import hello.clientcore.ThreadMap;
+import hello.common.TranObject;
+import hello.common.TranObjectType;
 import hello.dao.改密码dao;
+import hello.entity.Member;
 
 /**
  *
@@ -182,52 +188,66 @@ public class 找回密码 extends javax.swing.JFrame {
 		// TODO add your handling code here:
 
 		//		提交
+		Member member = new Member();
 		String phone = null;
 		String pwd = null;
 		String newpwd = null;
 		phone = this.txtphone.getText().toString();
 		pwd = this.txtpwd.getText().toString();
 		newpwd = this.txtnewpwd.getText().toString();
+		member.setPhone(phone);
 
 		if (pwd.equals(newpwd)) {
+			member.setLoginPwd(pwd);
 
 		} else {
 			pwd = null;
 		}
-
-		//		System.out.println(pwd);
-		//		System.out.println(phone);
-		改密码dao dao = new 改密码dao();
-		boolean gm = dao.upDate(pwd, phone);
-		//		System.out.println(gm);
-		if (gm) {
-			//			System.out.println("修改成功");
-			this.jxg.setText("修改成功");
-			//			new 登录界面().setVisible(true);
-			//			this.dispose();
-		} else {
-			//			System.out.println("修改失败");
-			this.jxg.setText("修改失败");
-		}
+		
+		TranObject forgetPwd = new TranObject();
+		forgetPwd.setType(TranObjectType.FORGETPWD);
+		forgetPwd.setObject(member);
+		Client client = (Client)ChatMap.getChatMap("client");
+		client.getOutputThread().setmessage(forgetPwd);
+		
+//
+//		//		System.out.println(pwd);
+//		//		System.out.println(phone);
+//		改密码dao dao = new 改密码dao();
+//		boolean gm = dao.upDate(pwd, phone);
+//		//		System.out.println(gm);
+//		if (gm) {
+//			//			System.out.println("修改成功");
+//			this.jxg.setText("修改成功");
+//			//			new 登录界面().setVisible(true);
+//			//			this.dispose();
+//		} else {
+//			//			System.out.println("修改失败");
+//			this.jxg.setText("修改失败");
+//		}
 
 	}
 
 	private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
 		// TODO add your handling code here:
-		new 登录界面().setVisible(true);
 		this.dispose();
+		登录界面 loginFrame = (登录界面)ThreadMap.getThreadMap("loginFrame");
+		loginFrame.setVisible(true);
+		
 	}
 
 	/**
 	 * @param args the command line arguments
 	 */
-	public static void main(String args[]) {
-		java.awt.EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				new 找回密码().setVisible(true);
-			}
-		});
-	}
+//	public static void main(String args[]) {
+//		java.awt.EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				new 找回密码().setVisible(true);
+//			}
+//		});
+//	}
+	
+	
 
 	//GEN-BEGIN:variables
 	// Variables declaration - do not modify
@@ -242,4 +262,12 @@ public class 找回密码 extends javax.swing.JFrame {
 	private javax.swing.JPasswordField txtpwd;
 	// End of variables declaration//GEN-END:variables
 
+	
+	
+	public void setJxgTxt(String str) {
+		this.jxg.setText(str);
+	}
+
+	
+	
 }
