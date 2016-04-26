@@ -1,6 +1,5 @@
 package hello.common;
 
-import java.io.Serializable;
 
 public enum TranObjectType {
 	

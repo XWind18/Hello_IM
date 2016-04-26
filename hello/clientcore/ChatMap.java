@@ -1,7 +1,5 @@
 package hello.clientcore;
 
-import hello.test.ClientTest;
-
 import java.util.HashMap;
 import java.util.Map;
 

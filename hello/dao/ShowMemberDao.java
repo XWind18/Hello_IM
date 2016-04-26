@@ -1,11 +1,11 @@
 package hello.dao;
 
-import hello.entity.User;
+import hello.entity.Member;
 
 import java.util.ArrayList;
 
 public class ShowMemberDao {
-	public static ArrayList<String> ShowMemberNameList(ArrayList<User> listUser){
+	public static ArrayList<String> ShowMemberNameList(ArrayList<Member> listUser){
 //		Connection con = null;
 //		PreparedStatement ps = null;
 //		ResultSet rs = null;
@@ -29,7 +29,7 @@ public class ShowMemberDao {
 //-----------------------------------------------------------		
 		ArrayList<String> nameList = new ArrayList<String>();
 		for(int i =0;i<listUser.size();i++){
-			nameList.add(listUser.get(i).getUserName());
+			nameList.add(listUser.get(i).getMemberId()+" "+listUser.get(i).getName());
 		}
 		return nameList;
 	}
@@ -39,7 +39,7 @@ public class ShowMemberDao {
 //			System.out.println(s);
 //		}
 //	}
-	public String[] ShowMemberNameArray(ArrayList<User> listUser){
+	public String[] ShowMemberNameArray(ArrayList<Member> listUser){
 		ArrayList<String> list = ShowMemberNameList(listUser);
 		String[] str = new String[list.size()];
 		for(int i = 0;i<list.size();i++){

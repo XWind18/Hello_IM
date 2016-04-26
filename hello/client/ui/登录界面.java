@@ -44,7 +44,6 @@ public class 登录界面 extends javax.swing.JFrame {
 		txtpwd = new javax.swing.JPasswordField();
 		rbpwd = new javax.swing.JLabel();
 		rbid = new javax.swing.JLabel();
-		jButton4 = new javax.swing.JButton();
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -73,8 +72,6 @@ public class 登录界面 extends javax.swing.JFrame {
 
 		jLabel2.setText("\u5bc6\u7801");
 
-		jButton4.setText("\u91cd\u65b0\u8f93\u5165");
-
 		javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(
 				jPanel1);
 		jPanel1.setLayout(jPanel1Layout);
@@ -96,25 +93,16 @@ public class 登录界面 extends javax.swing.JFrame {
 										.addGroup(
 												jPanel1Layout
 														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.TRAILING,
-																false)
+																javax.swing.GroupLayout.Alignment.TRAILING)
 														.addGroup(
+																javax.swing.GroupLayout.Alignment.LEADING,
 																jPanel1Layout
 																		.createSequentialGroup()
 																		.addGap(129,
 																				129,
 																				129)
 																		.addComponent(
-																				jButton1)
-																		.addPreferredGap(
-																				javax.swing.LayoutStyle.ComponentPlacement.RELATED,
-																				javax.swing.GroupLayout.DEFAULT_SIZE,
-																				Short.MAX_VALUE)
-																		.addComponent(
-																				jButton4,
-																				javax.swing.GroupLayout.PREFERRED_SIZE,
-																				89,
-																				javax.swing.GroupLayout.PREFERRED_SIZE))
+																				jButton1))
 														.addGroup(
 																javax.swing.GroupLayout.Alignment.LEADING,
 																jPanel1Layout
@@ -197,12 +185,7 @@ public class 登录界面 extends javax.swing.JFrame {
 																javax.swing.GroupLayout.PREFERRED_SIZE)
 														.addComponent(rbpwd))
 										.addGap(72, 72, 72)
-										.addGroup(
-												jPanel1Layout
-														.createParallelGroup(
-																javax.swing.GroupLayout.Alignment.BASELINE)
-														.addComponent(jButton1)
-														.addComponent(jButton4))
+										.addComponent(jButton1)
 										.addGap(62, 62, 62)
 										.addGroup(
 												jPanel1Layout
@@ -231,8 +214,7 @@ public class 登录界面 extends javax.swing.JFrame {
 				layout.createSequentialGroup()
 						.addContainerGap()
 						.addComponent(jPanel1,
-								javax.swing.GroupLayout.PREFERRED_SIZE,
-								javax.swing.GroupLayout.DEFAULT_SIZE,
+								javax.swing.GroupLayout.PREFERRED_SIZE, 369,
 								javax.swing.GroupLayout.PREFERRED_SIZE)
 						.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE,
 								Short.MAX_VALUE)));
@@ -240,8 +222,6 @@ public class 登录界面 extends javax.swing.JFrame {
 		pack();
 	}// </editor-fold>
 	//GEN-END:initComponents
-
-	
 
 	private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {
 		找回密码 forgetPwd = new 找回密码();
@@ -276,10 +256,10 @@ public class 登录界面 extends javax.swing.JFrame {
 		TranObject sendObject = new TranObject();
 		sendObject.setType(TranObjectType.LOGIN);
 		sendObject.setObject(member);
-		
-		Client client = (Client)ChatMap.getChatMap("client");
+
+		Client client = (Client) ChatMap.getChatMap("client");
 		client.getOutputThread().setmessage(sendObject);
-	}	
+	}
 
 	/**
 	 * @param args the command line arguments
@@ -292,19 +272,17 @@ public class 登录界面 extends javax.swing.JFrame {
 				ThreadMap.addThreadMap("loginFrame", loginFrame);
 			}
 		});
-		Client client= new Client(Constants.SERVER_IP, Constants.SERVER_PORT);
+		Client client = new Client(Constants.SERVER_IP, Constants.SERVER_PORT);
 		client.start();
 		ChatMap.addChatMap("client", client);
-		
-	}
 
+	}
 
 	//GEN-BEGIN:variables
 	// Variables declaration - do not modify
 	private javax.swing.JButton jButton1;
 	private javax.swing.JButton jButton2;
 	private javax.swing.JButton jButton3;
-	private javax.swing.JButton jButton4;
 	private javax.swing.JLabel jLabel1;
 	private javax.swing.JLabel jLabel2;
 	private javax.swing.JPanel jPanel1;
@@ -312,6 +290,7 @@ public class 登录界面 extends javax.swing.JFrame {
 	private javax.swing.JLabel rbpwd;
 	private javax.swing.JTextField txtid;
 	private javax.swing.JPasswordField txtpwd;
+
 	// End of variables declaration//GEN-END:variables
 	public void setRbidTxt(String str) {
 		this.rbid.setText(str);
@@ -320,8 +299,5 @@ public class 登录界面 extends javax.swing.JFrame {
 	public void setRbpwdTxt(String str) {
 		this.rbpwd.setText(str);
 	}
-	
-	
 
 }
-

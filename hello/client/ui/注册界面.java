@@ -25,7 +25,6 @@ public class 注册界面 extends javax.swing.JFrame {
 	public 注册界面() {
 		initComponents();
 	}
-
 	//GEN-BEGIN:initComponents
 	// <editor-fold defaultstate="collapsed" desc="Generated Code">
 	private void initComponents() {
@@ -466,8 +465,11 @@ public class 注册界面 extends javax.swing.JFrame {
 
 	private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
 		// TODO add your handling code here:
-		this.dispose();
-		new 注册界面().setVisible(true);
+		this.txtage.setText("");
+		this.txtid.setText("");
+		this.txtname.setText("");
+		this.txtnewpwd.setText("");
+		this.txtpwd.setText("");
 	}
 
 	private void txtidActionPerformed(java.awt.event.ActionEvent evt) {
@@ -517,7 +519,9 @@ public class 注册界面 extends javax.swing.JFrame {
 			name = this.txtname.getText().toString();
 			pwd = this.txtpwd.getText().toString();
 			newpwd = this.txtnewpwd.getText().toString();
-			age = Integer.parseInt(this.txtage.getText());
+			if(this.txtage.getText() != null || this.txtage.getText() != ""){
+				age = Integer.parseInt(this.txtage.getText());
+			}
 			phone = this.txtid.getText().toString();
 			if (pwd.equals(newpwd)) {	
 				member.setLoginPwd(pwd);	

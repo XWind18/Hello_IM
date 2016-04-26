@@ -69,13 +69,14 @@ public class InputThread extends Thread{
 		case REGISTER:
 			Member memberReg = (Member)readObject.getObject();
 			TranObject objReg = new TranObject();
-			System.out.println(12);
+			objReg.setType(TranObjectType.REGISTER);
 			注册dao daoRegister = new 注册dao();
 			手机dao daoPhone = new 手机dao();
 			boolean yz = daoPhone.yanzheng(memberReg.getPhone());
 			String ti1 = yz ? "该手机号已注册" : "";
 			if (yz) {
-				objReg.setCmd("rbid");	
+				objReg.setCmd("rbid");
+				objReg.setObject("该手机号已注册");
 				System.out.println(2);
 			} else {
 				boolean saveFlag = daoRegister.inSert(memberReg.getName(), memberReg.getLoginPwd(),
@@ -89,6 +90,7 @@ public class InputThread extends Thread{
 					System.out.println(4);
 				}
 			}
+			out.setMessage(objReg);
 
 		
 			break;
@@ -104,25 +106,30 @@ public class InputThread extends Thread{
 				if (pwd.equals(member.getLoginPwd())) {
 					System.out.println("登录成功");
 					sendObject.setCmd("true");
-					sendObject.setObject("登录成功");
+					sendObject.setToUser(1);
 					Member memLogin = JDBCUtils.queryForObject("select * from member where phone = ?", Member.class, member.getPhone());
+					sendObject.setObject(memLogin);
 					memLogin.setLoginPwd("");
 					sendObject.setObject(memLogin);
 					out.setMessage(sendObject);
+					sleep(500);
 					
 					//登录成功处理事件,通知好友上线
 					TranObject loginmessage = new TranObject();
 					loginmessage.setType(TranObjectType.FRIENDLOGIN);
-					loginmessage.setObject(memLogin);
+					loginmessage.setToUser(2);
+					loginmessage.setObject(FriendList.getFriendListAll());
 					List<OutputThread> list = map.getAll();
 					for (OutputThread outputThread : list) {
 						outputThread.setMessage(loginmessage);
+						sleep(500);
 					}
 					map.add(memLogin.getMemberId(), out);
 					
 					//  获取在线好友
 					TranObject getOnlineFriend = new TranObject();
 					getOnlineFriend.setType(TranObjectType.LOGIN);
+					getOnlineFriend.setToUser(3);
 					getOnlineFriend.setObject(FriendList.getFriendListAll());
 					out.setMessage(getOnlineFriend);
 					

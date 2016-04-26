@@ -196,36 +196,17 @@ public class 找回密码 extends javax.swing.JFrame {
 		pwd = this.txtpwd.getText().toString();
 		newpwd = this.txtnewpwd.getText().toString();
 		member.setPhone(phone);
-
 		if (pwd.equals(newpwd)) {
 			member.setLoginPwd(pwd);
 
 		} else {
 			pwd = null;
 		}
-		
 		TranObject forgetPwd = new TranObject();
 		forgetPwd.setType(TranObjectType.FORGETPWD);
 		forgetPwd.setObject(member);
 		Client client = (Client)ChatMap.getChatMap("client");
 		client.getOutputThread().setmessage(forgetPwd);
-		
-//
-//		//		System.out.println(pwd);
-//		//		System.out.println(phone);
-//		改密码dao dao = new 改密码dao();
-//		boolean gm = dao.upDate(pwd, phone);
-//		//		System.out.println(gm);
-//		if (gm) {
-//			//			System.out.println("修改成功");
-//			this.jxg.setText("修改成功");
-//			//			new 登录界面().setVisible(true);
-//			//			this.dispose();
-//		} else {
-//			//			System.out.println("修改失败");
-//			this.jxg.setText("修改失败");
-//		}
-
 	}
 
 	private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
@@ -261,9 +242,6 @@ public class 找回密码 extends javax.swing.JFrame {
 	private javax.swing.JTextField txtphone;
 	private javax.swing.JPasswordField txtpwd;
 	// End of variables declaration//GEN-END:variables
-
-	
-	
 	public void setJxgTxt(String str) {
 		this.jxg.setText(str);
 	}

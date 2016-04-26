@@ -76,6 +76,12 @@ public class TranObject<T> implements Serializable {
 	public void setFromMember(Member fromMember) {
 		this.fromMember = fromMember;
 	}
-    
+	@Override
+	public String toString() {
+		return "TranObject [type=" + type + ", fromUser=" + fromUser
+				+ ", toUser=" + toUser + ", object=" + object + ", group="
+				+ group + ", fromMember=" + fromMember + ", sendTime="
+				+ sendTime + ", cmd=" + cmd + "]";
+	}
     
 }

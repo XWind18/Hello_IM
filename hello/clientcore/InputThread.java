@@ -1,7 +1,6 @@
 package hello.clientcore;
 
 import hello.common.TranObject;
-import hello.common.TranObjectType;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -12,19 +11,15 @@ public class InputThread extends Thread{
 	private ObjectInputStream ois;
 	private TranObject message;
 	private boolean isStart;
-
 	private boolean messageLin = false;
-	
 
 	public boolean isMessageLin() {
 		return messageLin;
 	}
 
-
 	public void setMessageLin(boolean messageLin) {
 		this.messageLin = messageLin;
 	}
-
 
 	public InputThread(Socket socket) {
 		this.socket = socket;
@@ -35,18 +30,9 @@ public class InputThread extends Thread{
 			e.printStackTrace();
 		}
 	}
-	
-
 	public void setStart(boolean isStart) {
 		this.isStart = isStart;
 	}
-
-	
-
-
-
-
-
 	public TranObject getMessage() {
 		TranObject message = this.message;
 		messageLin = false;
@@ -55,7 +41,6 @@ public class InputThread extends Thread{
 		}
 		return message;
 	}
-
 
 	@Override
 	public void run() {
@@ -67,7 +52,6 @@ public class InputThread extends Thread{
 					wait();
 				}
 			}
-			
 			ois.close();
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -80,5 +64,4 @@ public class InputThread extends Thread{
 			e.printStackTrace();
 		}
 	}
-	
 }

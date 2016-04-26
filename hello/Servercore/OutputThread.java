@@ -44,6 +44,7 @@ public class OutputThread extends Thread{
 					wait();
 				}
 				if(massage != null){
+					System.out.println(massage);
 					oos.writeObject(massage);
 					oos.flush();
 				}

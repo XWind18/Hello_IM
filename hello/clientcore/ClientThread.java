@@ -1,15 +1,15 @@
 package hello.clientcore;
 
-import hello.Servercore.FriendList;
 import hello.client.ui.GroupChat;
 import hello.client.ui.MainPanel;
-import hello.client.ui.QqChat;
 import hello.client.ui.找回密码;
 import hello.client.ui.注册界面;
 import hello.client.ui.登录界面;
 import hello.common.TranObject;
+import hello.entity.Member;
 
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class ClientThread extends Thread{
 	private InputThread in;
@@ -37,13 +37,15 @@ public class ClientThread extends Thread{
 			if(in.isMessageLin()){
 				TranObject message = in.getMessage();
 				if(message != null){
+					System.out.println(message.getCmd());
 					switch(message.getType()){
 					case REGISTER:
 						注册界面 RegisterFrame = new 注册界面();
 						RegisterFrame = (注册界面)ThreadMap.getThreadMap("RegisterFrame");
-						
+						System.out.println(message.getCmd());
 						if("rbid".equals(message.getCmd())){
 							RegisterFrame.setRbidTxt((String) message.getObject());
+							
 						}else if("txts".equals(message.getCmd())) {
 							RegisterFrame.setTxtstxt((String) message.getObject());
 						}
@@ -58,8 +60,10 @@ public class ClientThread extends Thread{
 							//  登录成功
 							System.out.println(2);
 							loginFrame.dispose();
-							MainPanel mainpanel = new MainPanel();//新建好友列表页面
 							
+							MainPanel mainpanel = new MainPanel((Member)message.getObject());//新建好友列表页面
+							mainpanel.setVisible(true);
+							ThreadMap.addThreadMap("mainpanel", mainpanel);
 							
 							
 						}else if("rbpwd".equals(message.getCmd())){
@@ -77,9 +81,6 @@ public class ClientThread extends Thread{
 						break;
 					case MESSAGE:
 						
-						QqChat qqChat = (QqChat) ChatMap.getChatMap("qqchat");
-						
-						qqChat.showMessage(message);
 						break;
 						
 					case GROUPMESSAGE:
@@ -87,7 +88,10 @@ public class ClientThread extends Thread{
 						String txt = "" + message.getFromMember().getName()+"\n"+message.getObject()+"\n";
 						groupChat.setJTextFIeld1Text(txt);
 						break;
+					case FRIENDLOGIN:
 						
+						MainPanel.listModel((ArrayList)message.getObject());
+						break;
 					default:
 						break;
 					}

@@ -114,6 +114,7 @@ public class DeleteMemberFrame extends javax.swing.JFrame {
 								.addGap(27, 27, 27)));
 
 		pack();
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	}// </editor-fold>
 	//GEN-END:initComponents
 
