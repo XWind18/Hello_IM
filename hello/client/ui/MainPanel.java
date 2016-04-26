@@ -6,6 +6,10 @@
 
 package hello.client.ui;
 
+<<<<<<< HEAD
+=======
+import hello.Servercore.FriendList;
+>>>>>>> origin/master
 import hello.clientcore.ThreadMap;
 import hello.dao.ShowMemberDao;
 import hello.entity.Member;
@@ -13,8 +17,15 @@ import hello.entity.Member;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
+<<<<<<< HEAD
 import javax.swing.JButton;
 import javax.swing.JList;
+=======
+import javax.swing.AbstractListModel;
+import javax.swing.JButton;
+import javax.swing.JList;
+import javax.swing.ListModel;
+>>>>>>> origin/master
 
 //import com.hello.Dao.ShowMemberDao;
 //import com.hello.Dao.User;
@@ -46,6 +57,13 @@ public class MainPanel extends javax.swing.JFrame {
 				return strings[i];
 			}
 		});
+<<<<<<< HEAD
+=======
+	}
+
+	public static void init() {
+
+>>>>>>> origin/master
 	}
 
 

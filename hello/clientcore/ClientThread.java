@@ -63,7 +63,10 @@ public class ClientThread extends Thread{
 							
 							MainPanel mainpanel = new MainPanel((Member)message.getObject());//新建好友列表页面
 							mainpanel.setVisible(true);
+<<<<<<< HEAD
 							ThreadMap.addThreadMap("mainpanel", mainpanel);
+=======
+>>>>>>> origin/master
 							
 							
 						}else if("rbpwd".equals(message.getCmd())){
