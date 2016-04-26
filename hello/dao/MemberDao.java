@@ -13,7 +13,7 @@ import org.junit.Test;
 
 public class MemberDao {
 	public int delete(int id){
-		String sql = "delete from member where id = ?";
+		String sql = "delete from member where memberId = ?";
 		return JDBCUtils.update(sql, id);
 	}
 @Test

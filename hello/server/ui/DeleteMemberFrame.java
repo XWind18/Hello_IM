@@ -6,6 +6,8 @@
 
 package hello.server.ui;
 
+import hello.dao.MemberDao;
+
 /**
  *
  * @author  __USER__
@@ -29,6 +31,7 @@ public class DeleteMemberFrame extends javax.swing.JFrame {
 		btnDelete = new javax.swing.JButton();
 		jLabel1 = new javax.swing.JLabel();
 		txtDeleteId = new javax.swing.JTextField();
+		lbInfo = new javax.swing.JLabel();
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 		setTitle("\u5220\u9664\u7528\u6237");
@@ -55,39 +58,40 @@ public class DeleteMemberFrame extends javax.swing.JFrame {
 				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 				.addGroup(
 						layout.createSequentialGroup()
+								.addGap(53, 53, 53)
+								.addComponent(jLabel1)
+								.addGap(44, 44, 44)
+								.addComponent(txtDeleteId,
+										javax.swing.GroupLayout.PREFERRED_SIZE,
+										86,
+										javax.swing.GroupLayout.PREFERRED_SIZE)
+								.addContainerGap(51, Short.MAX_VALUE))
+				.addGroup(
+						javax.swing.GroupLayout.Alignment.TRAILING,
+						layout.createSequentialGroup()
+								.addContainerGap(103, Short.MAX_VALUE)
 								.addGroup(
 										layout.createParallelGroup(
-												javax.swing.GroupLayout.Alignment.LEADING)
-												.addGroup(
-														layout.createSequentialGroup()
-																.addGap(103,
-																		103,
-																		103)
-																.addComponent(
-																		btnDelete,
-																		javax.swing.GroupLayout.PREFERRED_SIZE,
-																		97,
-																		javax.swing.GroupLayout.PREFERRED_SIZE))
-												.addGroup(
-														layout.createSequentialGroup()
-																.addGap(49, 49,
-																		49)
-																.addComponent(
-																		jLabel1)
-																.addGap(50, 50,
-																		50)
-																.addComponent(
-																		txtDeleteId,
-																		javax.swing.GroupLayout.PREFERRED_SIZE,
-																		86,
-																		javax.swing.GroupLayout.PREFERRED_SIZE)))
-								.addContainerGap(49, Short.MAX_VALUE)));
+												javax.swing.GroupLayout.Alignment.TRAILING,
+												false)
+												.addComponent(
+														lbInfo,
+														javax.swing.GroupLayout.Alignment.LEADING,
+														javax.swing.GroupLayout.DEFAULT_SIZE,
+														javax.swing.GroupLayout.DEFAULT_SIZE,
+														Short.MAX_VALUE)
+												.addComponent(
+														btnDelete,
+														javax.swing.GroupLayout.Alignment.LEADING,
+														javax.swing.GroupLayout.DEFAULT_SIZE,
+														97, Short.MAX_VALUE))
+								.addGap(96, 96, 96)));
 		layout.setVerticalGroup(layout
 				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 				.addGroup(
 						javax.swing.GroupLayout.Alignment.TRAILING,
 						layout.createSequentialGroup()
-								.addContainerGap(40, Short.MAX_VALUE)
+								.addContainerGap(37, Short.MAX_VALUE)
 								.addGroup(
 										layout.createParallelGroup(
 												javax.swing.GroupLayout.Alignment.BASELINE)
@@ -98,11 +102,16 @@ public class DeleteMemberFrame extends javax.swing.JFrame {
 														javax.swing.GroupLayout.DEFAULT_SIZE,
 														javax.swing.GroupLayout.PREFERRED_SIZE))
 								.addGap(18, 18, 18)
+								.addComponent(lbInfo,
+										javax.swing.GroupLayout.PREFERRED_SIZE,
+										30,
+										javax.swing.GroupLayout.PREFERRED_SIZE)
+								.addGap(18, 18, 18)
 								.addComponent(btnDelete,
 										javax.swing.GroupLayout.PREFERRED_SIZE,
 										37,
 										javax.swing.GroupLayout.PREFERRED_SIZE)
-								.addGap(40, 40, 40)));
+								.addGap(27, 27, 27)));
 
 		pack();
 	}// </editor-fold>
@@ -116,6 +125,12 @@ public class DeleteMemberFrame extends javax.swing.JFrame {
 
 	private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {
 		// TODO add your handling code here
+		MemberDao dao = new MemberDao();
+		if(dao.delete(Integer.parseInt(txtDeleteId.getText()))>0){
+			lbInfo.setText("删除成功");
+		}else{
+			lbInfo.setText("删除失败");
+		}
 	}
 
 	/**
@@ -133,6 +148,7 @@ public class DeleteMemberFrame extends javax.swing.JFrame {
 	// Variables declaration - do not modify
 	private javax.swing.JButton btnDelete;
 	private javax.swing.JLabel jLabel1;
+	private javax.swing.JLabel lbInfo;
 	private javax.swing.JTextField txtDeleteId;
 	// End of variables declaration//GEN-END:variables
 

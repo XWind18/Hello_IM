@@ -11,6 +11,7 @@ public enum TranObjectType {
     FRIENDLOGIN, // 好友上线  
     FRIENDLOGOUT, // 好友下线  
     MESSAGE, // 用户发送消息  
+    GROUPMESSAGE,
     UNCONNECTED, // 无法连接  
     FILE, // 传输文件  
     REFRESH,//刷新好友列表   

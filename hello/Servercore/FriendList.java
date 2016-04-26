@@ -10,7 +10,10 @@ public class FriendList {
 	private static List<Member>  friendList = new ArrayList<Member>();
 	
 	
-	public static Member getFriednList(int index){
+
+	
+	
+	public static Member getFriendList(int index){
 
 		return friendList.get(index);
 	}

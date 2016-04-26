@@ -1,13 +1,13 @@
 package hello.clientcore;
 
+import hello.Servercore.FriendList;
+import hello.client.ui.GroupChat;
 import hello.client.ui.MainPanel;
 import hello.client.ui.QqChat;
 import hello.client.ui.找回密码;
 import hello.client.ui.注册界面;
 import hello.client.ui.登录界面;
 import hello.common.TranObject;
-import hello.common.TranObjectType;
-import hello.test.ClientTest;
 
 import java.net.Socket;
 
@@ -81,6 +81,13 @@ public class ClientThread extends Thread{
 						
 						qqChat.showMessage(message);
 						break;
+						
+					case GROUPMESSAGE:
+						GroupChat groupChat = (GroupChat) ThreadMap.getThreadMap("groupChat");
+						String txt = "" + message.getFromMember().getName()+"\n"+message.getObject()+"\n";
+						groupChat.setJTextFIeld1Text(txt);
+						break;
+						
 					default:
 						break;
 					}

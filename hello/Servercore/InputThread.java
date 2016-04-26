@@ -11,7 +11,9 @@ import hello.util.JDBCUtils;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -154,6 +156,22 @@ public class InputThread extends Thread{
 			
 			
 			
+			break;
+		case GROUPMESSAGE:
+			Member memGroup = readObject.getFromMember();
+			if(map.getById(memGroup.getMemberId()) == null){
+				map.add(memGroup.getMemberId(), out);
+				System.out.println(23);
+			}
+			ArrayList<OutputThread> list = (ArrayList<OutputThread>) map.getAll();
+			for (OutputThread outputThread : list) {
+				if(!outputThread.equals(out)){
+					outputThread.setMessage(readObject);
+					System.out.println(4);
+				}
+			}
+			System.out.println(1);
+			System.out.println(map.getAll());
 			break;
 		case MESSAGE:
 			out.setMessage(readObject);

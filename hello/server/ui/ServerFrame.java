@@ -159,20 +159,18 @@ public class ServerFrame extends javax.swing.JFrame {
 	//GEN-END:initComponents
 
 	private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {
-		java.awt.EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				new DeleteMemberFrame().setVisible(true);
-			}
-		});
+		new DeleteMemberFrame().setVisible(true);
 	}
 
 	private void btnQueryActionPerformed(java.awt.event.ActionEvent evt) {
-	
+		MemberDao dao = new MemberDao();
+		String str = dao.query();
+		showMessage(str);
+		
+		
 	}
 	public void showMessage(String message){
-		MemberDao dao = new MemberDao();
-		String tip= dao.query();
-		txtInfo.append(tip);
+		txtInfo.append(message);
 	}
 
 	/**

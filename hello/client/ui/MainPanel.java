@@ -86,19 +86,19 @@ public class MainPanel extends javax.swing.JFrame {
 		listShowMember.setBackground(new java.awt.Color(102, 102, 102));
 		listShowMember.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 24));
 		listShowMember.setForeground(new java.awt.Color(255, 255, 255));
-		listShowMember.setModel(new javax.swing.AbstractListModel() {
-
-
-			String[] strings = new ShowMemberDao().ShowMemberNameArray();
-
-			public int getSize() {
-				return strings.length;
-			}
-
-			public Object getElementAt(int i) {
-				return strings[i];
-			}
-		});
+//		listShowMember.setModel(new javax.swing.AbstractListModel() {
+//
+//
+//			String[] strings = new ShowMemberDao().ShowMemberNameArray();
+//
+//			public int getSize() {
+//				return strings.length;
+//			}
+//
+//			public Object getElementAt(int i) {
+//				return strings[i];
+//			}
+//		});
 		listShowMember.setSelectionBackground(new java.awt.Color(51, 51, 51));
 		listShowMember.setSelectionForeground(new java.awt.Color(0, 153, 204));
 		listShowMember.addMouseListener(new java.awt.event.MouseAdapter() {
