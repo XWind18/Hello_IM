@@ -1,6 +1,5 @@
 package hello.clientcore;
 
-import hello.Servercore.FriendList;
 import hello.client.ui.GroupChat;
 import hello.client.ui.MainPanel;
 import hello.client.ui.QqChat;
@@ -8,6 +7,7 @@ import hello.client.ui.找回密码;
 import hello.client.ui.注册界面;
 import hello.client.ui.登录界面;
 import hello.common.TranObject;
+import hello.entity.Member;
 
 import java.net.Socket;
 
@@ -58,8 +58,9 @@ public class ClientThread extends Thread{
 							//  登录成功
 							System.out.println(2);
 							loginFrame.dispose();
-							MainPanel mainpanel = new MainPanel();//新建好友列表页面
 							
+							MainPanel mainpanel = new MainPanel((Member)message.getObject());//新建好友列表页面
+							mainpanel.setVisible(true);
 							
 							
 						}else if("rbpwd".equals(message.getCmd())){

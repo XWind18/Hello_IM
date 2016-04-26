@@ -104,8 +104,8 @@ public class InputThread extends Thread{
 				if (pwd.equals(member.getLoginPwd())) {
 					System.out.println("登录成功");
 					sendObject.setCmd("true");
-					sendObject.setObject("登录成功");
 					Member memLogin = JDBCUtils.queryForObject("select * from member where phone = ?", Member.class, member.getPhone());
+					sendObject.setObject(memLogin);
 					memLogin.setLoginPwd("");
 					sendObject.setObject(memLogin);
 					out.setMessage(sendObject);

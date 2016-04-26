@@ -52,9 +52,13 @@ public class GroupChat extends javax.swing.JFrame {
 		jPanel4 = new javax.swing.JPanel();
 		jPanel5 = new javax.swing.JPanel();
 		txtinp = new javax.swing.JTextField();
+		jScrollPane1 = new javax.swing.JScrollPane();
 		jTextField1 = new javax.swing.JTextArea();
 		jMenuBar1 = new javax.swing.JMenuBar();
 
+		jTextField1.setColumns(20);
+		jTextField1.setRows(5);
+		jScrollPane1.setViewportView(jTextField1);
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
 		jPanel1.setBackground(new java.awt.Color(51, 51, 51));
@@ -134,7 +138,7 @@ public class GroupChat extends javax.swing.JFrame {
 														.createParallelGroup(
 																javax.swing.GroupLayout.Alignment.LEADING)
 														.addComponent(
-																jTextField1,
+																jScrollPane1,
 																javax.swing.GroupLayout.DEFAULT_SIZE,
 																468,
 																Short.MAX_VALUE)
@@ -184,7 +188,7 @@ public class GroupChat extends javax.swing.JFrame {
 																jPanel1Layout
 																		.createSequentialGroup()
 																		.addComponent(
-																				jTextField1,
+																				jScrollPane1,
 																				javax.swing.GroupLayout.PREFERRED_SIZE,
 																				248,
 																				javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -327,6 +331,7 @@ public class GroupChat extends javax.swing.JFrame {
 	private javax.swing.JPanel jPanel2;
 	private javax.swing.JPanel jPanel4;
 	private javax.swing.JPanel jPanel5;
+	private javax.swing.JScrollPane jScrollPane1;
 	private javax.swing.JTextArea jTextField1;
 	private javax.swing.JTextField txtinp;
 	// End of variables declaration//GEN-END:variables
