@@ -19,10 +19,10 @@ import hello.server.dao.注册dao;
  *
  * @author  __USER__
  */
-public class 注册界面 extends javax.swing.JFrame {
+public class RegisterFrame extends javax.swing.JFrame {
 
 	/** Creates new form 注册界面 */
-	public 注册界面() {
+	public RegisterFrame() {
 		initComponents();
 	}
 	//GEN-BEGIN:initComponents
@@ -459,7 +459,7 @@ public class 注册界面 extends javax.swing.JFrame {
 	private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {
 		// TODO add your handling code here:
 		this.dispose();
-		登录界面 loginFrame = (登录界面)ThreadMap.getThreadMap("loginFrame");
+		LoginFrame loginFrame = (LoginFrame)ThreadMap.getThreadMap("loginFrame");
 		loginFrame.setVisible(true);
 
 	}

@@ -17,10 +17,10 @@ import hello.entity.TranObjectType;
  *
  * @author  __USER__
  */
-public class 找回密码 extends javax.swing.JFrame {
+public class ForgetPwd extends javax.swing.JFrame {
 
 	/** Creates new form 找回密码 */
-	public 找回密码() {
+	public ForgetPwd() {
 		initComponents();
 	}
 
@@ -212,7 +212,7 @@ public class 找回密码 extends javax.swing.JFrame {
 	private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
 		// TODO add your handling code here:
 		this.dispose();
-		登录界面 loginFrame = (登录界面)ThreadMap.getThreadMap("loginFrame");
+		LoginFrame loginFrame = (LoginFrame)ThreadMap.getThreadMap("loginFrame");
 		loginFrame.setVisible(true);
 		
 	}

@@ -1,6 +1,7 @@
 package hello.server.Servercore;
 
 import hello.entity.Member;
+import hello.entity.MyDate;
 import hello.entity.TranObject;
 import hello.entity.TranObjectType;
 import hello.server.dao.手机dao;
@@ -110,27 +111,32 @@ public class InputThread extends Thread{
 					out.setMessage(sendObject);
 					sleep(50);
 					FriendList.addFriendList(memLogin);
+					map.add(memLogin.getMemberId(), out);
 					
 					//登录成功处理事件,通知好友上线
 					TranObject loginmessage = new TranObject();
 					loginmessage.setType(TranObjectType.FRIENDLOGIN);
-					loginmessage.setToUser(2);
-					loginmessage.setObject(FriendList.getFriendListAll());
-					map.add(memLogin.getMemberId(), out);
+					loginmessage.setObject(memLogin);
 					List<OutputThread> list = map.getAll();
 					for (OutputThread outputThread : list) {
-//						if(!out.getSocket().equals(outputThread.getSocket())){
-							loginmessage.setCmd(out.toString());
+						if(!out.getSocket().equals(outputThread.getSocket())){
 							outputThread.setMessage(loginmessage);
-							outputThread.sleep(100);
-//						}
+							sleep(100);
+						}
 					}
-					//  获取在线好友
-					TranObject getOnlineFriend = new TranObject();
-					getOnlineFriend.setType(TranObjectType.REFRESH);
-					getOnlineFriend.setObject(FriendList.getFriendListAll());
-					getOnlineFriend.setToUser(member.getMemberId());
-					out.setMessage(getOnlineFriend);
+					
+//					loginmessage.setToUser(2);
+//					System.out.println("flist:"+FriendList.getFriendListAll());
+//						loginmessage.setSendTime(MyDate.getDate());
+//							loginmessage.setCmd(out.toString());
+//							System.out.println("server:"+loginmessage);
+//							
+//					//  获取在线好友
+//					TranObject getOnlineFriend = new TranObject();
+//					getOnlineFriend.setType(TranObjectType.REFRESH);
+//					getOnlineFriend.setObject(FriendList.getFriendListAll());
+//					getOnlineFriend.setToUser(member.getMemberId());
+//					out.setMessage(getOnlineFriend);
 				} else {
 					sendObject.setCmd("rbpwd");
 					sendObject.setObject("密码错误");
@@ -175,7 +181,12 @@ public class InputThread extends Thread{
 			OutputThread output = map.getById(readObject.getToUser());
 			output.setMessage(readObject);
 			break;
-		
+		case REFRESH:
+			TranObject getOnlineFriend = new TranObject();
+			getOnlineFriend.setType(TranObjectType.REFRESH);
+			getOnlineFriend.setObject(FriendList.getFriendListAll());
+			out.setMessage(getOnlineFriend);
+			break;
 		default:
 			break;
 		}

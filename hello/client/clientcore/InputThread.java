@@ -1,10 +1,19 @@
 package hello.client.clientcore;
 
+import hello.client.ui.ForgetPwd;
+import hello.client.ui.GroupChat;
+import hello.client.ui.HelloRoom;
+import hello.client.ui.LoginFrame;
+import hello.client.ui.MainPanel;
+import hello.client.ui.RegisterFrame;
+import hello.entity.Member;
 import hello.entity.TranObject;
+import hello.entity.TranObjectType;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class InputThread extends Thread{
 	private Socket socket;
@@ -43,25 +52,116 @@ public class InputThread extends Thread{
 
 	@Override
 	public void run() {
+
 		try {
 			while(isStart){
-				message = (TranObject)ois.readObject();
-				System.out.println(message);
-				messageLin = true;
-				synchronized (this) {
-					wait();
-				}
+				readMessage();
 			}
-			ois.close();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InterruptedException e) {
+			if(ois != null){
+				ois.close();
+			}
+			if(socket != null){
+				socket.close();
+			}
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	public void readMessage() throws Exception{
+		TranObject message = (TranObject) ois.readObject();
+		System.out.println(message);
+		switch(message.getType()){
+		case REGISTER:
+			RegisterFrame RegisterFrame = new RegisterFrame();
+			RegisterFrame = (RegisterFrame)ThreadMap.getThreadMap("RegisterFrame");
+			if("rbid".equals(message.getCmd())){
+				RegisterFrame.setRbidTxt((String) message.getObject());
+			}else if("txts".equals(message.getCmd())) {
+				RegisterFrame.setTxtstxt((String) message.getObject());
+			}
+			
+			break;
+		case LOGIN:
+			LoginFrame loginFrame = (LoginFrame)ThreadMap.getThreadMap("loginFrame");
+			loginFrame.setRbpwdTxt("");
+			loginFrame.setRbidTxt("");
+			if("true".equals(message.getCmd())){
+				//  登录成功
+				loginFrame.dispose();
+				//新建主窗口
+				MainPanel mainpanel = new MainPanel((Member)message.getObject());//新建好友列表页面
+				mainpanel.setVisible(true);
+				ThreadMap.addThreadMap("mainpanel", mainpanel);
+				getFriendList();
+			}else if("rbpwd".equals(message.getCmd())){
+				loginFrame.setRbpwdTxt("密码错误");
+			}else {
+				loginFrame.setRbidTxt("账号不存在");
+			}
+			break;
+			
+		case FORGETPWD:
+			ForgetPwd forgetPwd = (ForgetPwd)ThreadMap.getThreadMap("fotgetPwd");
+			forgetPwd.setJxgTxt((String) message.getObject());
+			break;
+		case MESSAGE:
+			HelloRoom helloRoom = null;
+			Member friend = null;
+			Member mySelf = null;
+			if(ThreadMap.getThreadMap("helloRoom_"+message.getFromUser()) != null){
+				helloRoom = (HelloRoom)ThreadMap.getThreadMap("helloRoom_"+message.getFromUser());
+			}else{
+				for (int i = 0; i < FriendList.getSize(); i++) {
+					if(FriendList.getFriendList(i).getMemberId()==message.getFromUser()){
+						friend = FriendList.getFriendList(i);
+					}
+				}
+				for (int i = 0; i < FriendList.getSize(); i++) {
+					if(FriendList.getFriendList(i).getMemberId()==message.getToUser()){
+						mySelf = FriendList.getFriendList(i);
+					}
+				}
+				if(friend != null && mySelf != null){
+					helloRoom = new HelloRoom(mySelf,friend);
+					helloRoom.setVisible(true);
+					ThreadMap.addThreadMap("helloRoom_"+friend.getMemberId(), helloRoom);
+				}
+			}
+			if(helloRoom != null){
+				helloRoom.showMessage(message);
+			}
+			break;
+			
+		case GROUPMESSAGE:
+			GroupChat groupChat = (GroupChat) ThreadMap.getThreadMap("groupChat");
+			groupChat.setJTextFIeld1Text(message);
+			break;
+		case FRIENDLOGIN:
+			for (int i = 0; i < FriendList.getSize(); i++) {
+				if(FriendList.getFriendList(i).equals((Member)message.getObject())){
+					break;
+				}
+			}
+				
+			FriendList.addFriendList((Member) message.getObject());
+			MainPanel.listModel((ArrayList<Member>)FriendList.getFriendListAll());
+			break;
+		case REFRESH:
+//			System.out.println("client:"+message);
+			FriendList.setFriendList((ArrayList)message.getObject());
+			if(FriendList.getSize()>0){
+				MainPanel.listModel((ArrayList<Member>)FriendList.getFriendListAll());
+			}
+			break;
+		default:
+			break;
+		}
+	}
+	public void getFriendList(){
+		TranObject getOnlineFriend = new TranObject();
+		getOnlineFriend.setType(TranObjectType.REFRESH); 
+		ClientThread clientThread = (ClientThread)ThreadMap.getThreadMap("clientThread");
+		clientThread.getOut().setmessage(getOnlineFriend);		
 	}
 }

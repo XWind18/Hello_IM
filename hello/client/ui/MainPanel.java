@@ -7,9 +7,12 @@
 package hello.client.ui;
 
 
+import hello.client.clientcore.ClientThread;
 import hello.client.clientcore.FriendList;
 import hello.client.clientcore.ThreadMap;
 import hello.entity.Member;
+import hello.entity.TranObject;
+import hello.entity.TranObjectType;
 import hello.server.dao.ShowMemberDao;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -213,6 +216,7 @@ public class MainPanel extends javax.swing.JFrame {
 		GroupChat groupChat = new GroupChat(mySelf);
 		groupChat.setVisible(true);
 		ThreadMap.addThreadMap("groupChat", groupChat);
+		getFriendList();
 
 	}
 
@@ -237,6 +241,12 @@ public class MainPanel extends javax.swing.JFrame {
 		Member mySelf = new Member();
 		mySelf.setName(name);
 		labMyself.setText(mySelf.getName());
+	}
+	public void getFriendList(){
+		TranObject getOnlineFriend = new TranObject();
+		getOnlineFriend.setType(TranObjectType.REFRESH); 
+		ClientThread clientThread = (ClientThread)ThreadMap.getThreadMap("clientThread");
+		clientThread.getOut().setmessage(getOnlineFriend);		
 	}
 
 	/**

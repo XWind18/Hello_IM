@@ -18,10 +18,10 @@ import hello.entity.TranObjectType;
  *
  * @author  __USER__
  */
-public class 登录界面 extends javax.swing.JFrame {
+public class LoginFrame extends javax.swing.JFrame {
 
 	/** Creates new form 登录界面 */
-	public 登录界面() {
+	public LoginFrame() {
 		initComponents();
 	}
 
@@ -224,7 +224,7 @@ public class 登录界面 extends javax.swing.JFrame {
 	//GEN-END:initComponents
 
 	private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {
-		找回密码 forgetPwd = new 找回密码();
+		ForgetPwd forgetPwd = new ForgetPwd();
 		forgetPwd.setVisible(true);
 		ThreadMap.addThreadMap("forgetPwd", forgetPwd);
 		this.setVisible(false);
@@ -234,7 +234,7 @@ public class 登录界面 extends javax.swing.JFrame {
 		// TODO add your handling code here:
 
 		//		注册
-		注册界面 RegisterFrame = new 注册界面();
+		RegisterFrame RegisterFrame = new RegisterFrame();
 		RegisterFrame.setVisible(true);
 		ThreadMap.addThreadMap("RegisterFrame", RegisterFrame);
 		this.setVisible(false);
@@ -269,7 +269,7 @@ public class 登录界面 extends javax.swing.JFrame {
 	public static void main(String args[]) {
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				登录界面 loginFrame = new 登录界面();
+				LoginFrame loginFrame = new LoginFrame();
 				loginFrame.setVisible(true);
 				ThreadMap.addThreadMap("loginFrame", loginFrame);
 			}
