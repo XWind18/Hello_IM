@@ -1,7 +1,7 @@
-package hello.dao;
+package hello.server.dao;
 
 import hello.entity.Member;
-import hello.util.JDBCUtils;
+import hello.server.util.JDBCUtils;
 
 import java.util.Iterator;
 import java.util.List;

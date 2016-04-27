@@ -6,7 +6,7 @@
 
 package hello.server.ui;
 
-import hello.dao.MemberDao;
+import hello.server.dao.MemberDao;
 
 /**
  *

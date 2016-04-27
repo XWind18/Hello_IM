@@ -6,9 +6,8 @@
 
 package hello.server.ui;
 
-import hello.Servercore.Server;
-import hello.common.TranObject;
-import hello.dao.MemberDao;
+import hello.server.Servercore.Server;
+import hello.server.dao.MemberDao;
 
 /**
  *

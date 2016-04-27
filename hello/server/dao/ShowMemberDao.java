@@ -1,4 +1,4 @@
-package hello.dao;
+package hello.server.dao;
 
 import hello.entity.Member;
 

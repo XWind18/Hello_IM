@@ -6,13 +6,13 @@
 
 package hello.client.ui;
 
-import hello.clientcore.ChatMap;
-import hello.clientcore.Client;
-import hello.clientcore.ThreadMap;
-import hello.common.Constants;
-import hello.common.TranObject;
-import hello.common.TranObjectType;
+import hello.client.clientcore.ChatMap;
+import hello.client.clientcore.Client;
+import hello.client.clientcore.ThreadMap;
+import hello.entity.Constants;
 import hello.entity.Member;
+import hello.entity.TranObject;
+import hello.entity.TranObjectType;
 
 /**
  *
@@ -248,6 +248,8 @@ public class 登录界面 extends javax.swing.JFrame {
 		Member member = new Member();
 		String phone = null;
 		String password = null;
+		setRbidTxt("");
+		setRbpwdTxt("");
 		phone = this.txtid.getText().toString();
 		password = this.txtpwd.getText().toString();
 		member.setPhone(phone);

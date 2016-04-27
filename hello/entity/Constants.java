@@ -1,4 +1,4 @@
-package hello.common;
+package hello.entity;
 
 public final class Constants {
 	

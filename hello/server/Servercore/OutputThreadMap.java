@@ -1,4 +1,4 @@
-package hello.Servercore;
+package hello.server.Servercore;
 
 import java.util.ArrayList;
 import java.util.HashMap;

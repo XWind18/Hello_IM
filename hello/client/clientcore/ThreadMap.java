@@ -1,4 +1,4 @@
-package hello.clientcore;
+package hello.client.clientcore;
 
 import java.util.HashMap;
 import java.util.Map;

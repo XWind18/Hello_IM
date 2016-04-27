@@ -1,20 +1,28 @@
-package hello.clientcore;
+package hello.server.Servercore;
 
-import hello.common.TranObject;
+import hello.entity.TranObject;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 public class OutputThread extends Thread{
-	private Socket socket;
+	private OutputThreadMap map;
 	private ObjectOutputStream oos;
 	private TranObject message;
 	private boolean isStart = true;
+	private Socket socket;
 	
-	public OutputThread(Socket socket) {
-		this.socket = socket;
+	
+	public Socket getSocket() {
+		return socket;
+	}
+
+	public OutputThread(Socket socket, OutputThreadMap map) {
+		
 		try {
+			this.map = map;
+			this.socket = socket;
 			oos = new ObjectOutputStream(socket.getOutputStream());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -22,42 +30,40 @@ public class OutputThread extends Thread{
 		}
 	}
 	
+	public void setStart(boolean isStart) {
+		this.isStart = isStart;
+	}
 
-	public void setmessage(TranObject message) {
+	public void setMessage(TranObject message){
 		this.message = message;
 		synchronized (this) {
 			notify();
 		}
 	}
-
-
-	public void setStart(boolean isStart) {
-		this.isStart = isStart;
-	}
-
-
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
+		
 		try {
 			while(isStart){
-				if(message != null){
-					oos.writeObject(message);
-					oos.flush();
-				}
 				synchronized (this) {
 					wait();
 				}
-				
+				if(message != null){
+					System.out.println(message);
+					oos.writeObject(message);
+					oos.flush();
+				}
 			}
-			oos.close();
+			if(oos != null){
+				oos.close();
+			}
 			if(socket != null){
 				socket.close();
 			}
-		} catch (InterruptedException e) {
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (IOException e) {
+		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

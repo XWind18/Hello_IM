@@ -6,14 +6,15 @@
 
 package hello.client.ui;
 
-import hello.Servercore.FriendList;
-import hello.clientcore.Client;
-import hello.clientcore.ThreadMap;
-import hello.common.Constants;
-import hello.common.MyDate;
-import hello.common.TranObject;
-import hello.common.TranObjectType;
+import hello.client.clientcore.Client;
+import hello.client.clientcore.OutputThread;
+import hello.client.clientcore.ThreadMap;
+import hello.entity.Constants;
 import hello.entity.Member;
+import hello.entity.MyDate;
+import hello.entity.TranObject;
+import hello.entity.TranObjectType;
+import hello.server.Servercore.FriendList;
 
 /**
  * 
@@ -21,23 +22,23 @@ import hello.entity.Member;
  */
 public class GroupChat extends javax.swing.JFrame {
 //	CopyOfsocket client = null;
-	private int memberId;
+	private Member member;
 	
 	
 	
 
 	public int getMemberId() {
-		return memberId;
+		return member.getMemberId();
 	}
 	/** Creates new form mainJFrame */
-	public GroupChat() {
-//		client = new CopyOfsocket();//新建一个服务端的连接
-//		Thread thread = new Thread(new jtfwqxx());//给监听事件分配现成
-//		thread.start();
-		initComponents();
-	}
+//	public GroupChat() {
+////		client = new CopyOfsocket();//新建一个服务端的连接
+////		Thread thread = new Thread(new jtfwqxx());//给监听事件分配现成
+////		thread.start();
+//		initComponents();
+//	}
 	public GroupChat(Member member){
-		this.memberId = member.getMemberId();
+		this.member = member;
 		initComponents();
 	}
 
@@ -241,6 +242,7 @@ public class GroupChat extends javax.swing.JFrame {
 						.addContainerGap(58, Short.MAX_VALUE)));
 
 		pack();
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	}// </editor-fold>
 		// GEN-END:initComponents
 
@@ -256,14 +258,11 @@ public class GroupChat extends javax.swing.JFrame {
 		TranObject sendMessage = new TranObject();
 		sendMessage.setObject(str);
 		sendMessage.setType(TranObjectType.GROUPMESSAGE);
-		Member member = new Member();
-		member.setMemberId(4);
-		member.setName("kkk");
-		FriendList.addFriendList(member);
-		sendMessage.setFromMember(FriendList.getFriendList(memberId));
+		sendMessage.setFromMember(member);
 		sendMessage.setSendTime(MyDate.getDate());
-		client.getOutputThread().setmessage(sendMessage);//将数据发送到服务器
-		jTextField1.setText(jTextField1.getText()+"\n"+str);
+		OutputThread out = client.getOutputThread();
+		out.setmessage(sendMessage);//将数据发送到服务器
+		jTextField1.setText(jTextField1.getText()+" "+ sendMessage.getSendTime()+"\n"+str);
 		txtinp.setText("");//清空输入框
 	}
 
@@ -276,51 +275,30 @@ public class GroupChat extends javax.swing.JFrame {
 		// TODO add your handling code here:
 
 	}
-	public void setJTextFIeld1Text(String str){
+	public void setJTextFIeld1Text(String time ,String str){
 		System.out.println(str);
-		jTextField1.setText(jTextField1.getText()+"\n"+str);//设置jTextField1的文本为原来的文本加上服务器发送的数据
+		jTextField1.setText(jTextField1.getText()+" "+ time+"\n"+str);//设置jTextField1的文本为原来的文本加上服务器发送的数据
 	}
-//
-//	class jtfwqxx implements Runnable {//监听服务器向该客户端发送的消息
-//
-//		@Override
-//		public void run() {
-//			BufferedReader br = null;
-//			String str = null;
-//			try {
-//				System.out.println("jtfwqxc satrt");
-//				while(true){
-//					br = new BufferedReader(new InputStreamReader(
-//							client.socket.getInputStream()));//获得该客户端socket的输入流
-//				if((str = br.readLine())!=null) {//取出输入流里的一行数据(服务器发送给客户端的数据)
-//					System.out.println(str);
-//					jTextField1.setText(jTextField1.getText()+"\n"+str);//设置jTextField1的文本为原来的文本加上服务器发送的数据
-//				}
-//				}
-//			} catch (IOException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//		}
-//	}
+
+
 
 	/**
 	 * @param args
 	 *            the command line arguments
 	 */
-	public static void main(String args[]) {
-		java.awt.EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				GroupChat groupChat = new GroupChat();
-				groupChat.setVisible(true);
-				ThreadMap.addThreadMap("groupChat", groupChat);
-			}
-		});
-		Client client= new Client(Constants.SERVER_IP, Constants.SERVER_PORT);
-		client.start();
-		ThreadMap.addThreadMap("client", client);
-		
-	}
+//	public static void main(String args[]) {
+//		java.awt.EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				GroupChat groupChat = new GroupChat();
+//				groupChat.setVisible(true);
+//				ThreadMap.addThreadMap("groupChat", groupChat);
+//			}
+//		});
+//		Client client= new Client(Constants.SERVER_IP, Constants.SERVER_PORT);
+//		client.start();
+//		ThreadMap.addThreadMap("client", client);
+//		
+//	}
 
 	// GEN-BEGIN:variables
 	// Variables declaration - do not modify

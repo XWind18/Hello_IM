@@ -6,26 +6,15 @@
 
 package hello.client.ui;
 
-<<<<<<< HEAD
-=======
-import hello.Servercore.FriendList;
->>>>>>> origin/master
-import hello.clientcore.ThreadMap;
-import hello.dao.ShowMemberDao;
-import hello.entity.Member;
 
+import hello.client.clientcore.ThreadMap;
+import hello.entity.Member;
+import hello.server.dao.ShowMemberDao;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import javax.swing.JButton;
+import javax.swing.JList;
 
-<<<<<<< HEAD
-import javax.swing.JButton;
-import javax.swing.JList;
-=======
-import javax.swing.AbstractListModel;
-import javax.swing.JButton;
-import javax.swing.JList;
-import javax.swing.ListModel;
->>>>>>> origin/master
 
 //import com.hello.Dao.ShowMemberDao;
 //import com.hello.Dao.User;
@@ -57,17 +46,7 @@ public class MainPanel extends javax.swing.JFrame {
 				return strings[i];
 			}
 		});
-<<<<<<< HEAD
-=======
 	}
-
-	public static void init() {
-
->>>>>>> origin/master
-	}
-
-
-
 	//GEN-BEGIN:initComponents
 	// <editor-fold defaultstate="collapsed" desc="Generated Code">
 	private void initComponents() {
@@ -229,7 +208,7 @@ public class MainPanel extends javax.swing.JFrame {
 
 	private void BtnGroupActionPerformed(java.awt.event.ActionEvent evt) {
 		// TODO add your handling code here:
-		GroupChat groupChat = new GroupChat();
+		GroupChat groupChat = new GroupChat(mySelf);
 		groupChat.setVisible(true);
 		ThreadMap.addThreadMap("groupChat", groupChat);
 

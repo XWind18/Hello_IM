@@ -1,4 +1,4 @@
-package hello.util;
+package hello.server.util;
 
 
 import java.io.BufferedInputStream;

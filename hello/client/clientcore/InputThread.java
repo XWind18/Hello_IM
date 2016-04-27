@@ -1,6 +1,6 @@
-package hello.clientcore;
+package hello.client.clientcore;
 
-import hello.common.TranObject;
+import hello.entity.TranObject;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;

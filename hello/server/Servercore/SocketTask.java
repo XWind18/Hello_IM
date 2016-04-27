@@ -1,4 +1,4 @@
-package hello.Servercore;
+package hello.server.Servercore;
 
 
 import hello.server.ui.ServerFrame;
@@ -24,6 +24,7 @@ public class SocketTask implements Runnable{
 		out = new OutputThread(socket , map);
 		in = new InputThread(socket, out, map);
 		out.setStart(true);
+		out.setPriority(9);
 		in.setStart(true);
 		out.start();
 		in.start();

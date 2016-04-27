@@ -6,13 +6,12 @@
 
 package hello.client.ui;
 
-import hello.clientcore.ChatMap;
-import hello.clientcore.Client;
-import hello.clientcore.ThreadMap;
-import hello.common.TranObject;
-import hello.common.TranObjectType;
-import hello.dao.改密码dao;
+import hello.client.clientcore.ChatMap;
+import hello.client.clientcore.Client;
+import hello.client.clientcore.ThreadMap;
 import hello.entity.Member;
+import hello.entity.TranObject;
+import hello.entity.TranObjectType;
 
 /**
  *
@@ -177,6 +176,7 @@ public class 找回密码 extends javax.swing.JFrame {
 								.addComponent(jButton2).addContainerGap()));
 
 		pack();
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	}// </editor-fold>
 	//GEN-END:initComponents
 

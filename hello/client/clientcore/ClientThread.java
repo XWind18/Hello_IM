@@ -1,12 +1,12 @@
-package hello.clientcore;
+package hello.client.clientcore;
 
 import hello.client.ui.GroupChat;
 import hello.client.ui.MainPanel;
 import hello.client.ui.找回密码;
 import hello.client.ui.注册界面;
 import hello.client.ui.登录界面;
-import hello.common.TranObject;
 import hello.entity.Member;
+import hello.entity.TranObject;
 
 import java.net.Socket;
 import java.util.ArrayList;
@@ -42,7 +42,6 @@ public class ClientThread extends Thread{
 					case REGISTER:
 						注册界面 RegisterFrame = new 注册界面();
 						RegisterFrame = (注册界面)ThreadMap.getThreadMap("RegisterFrame");
-						System.out.println(message.getCmd());
 						if("rbid".equals(message.getCmd())){
 							RegisterFrame.setRbidTxt((String) message.getObject());
 							
@@ -58,15 +57,12 @@ public class ClientThread extends Thread{
 						System.out.println(message.getCmd());
 						if("true".equals(message.getCmd())){
 							//  登录成功
-							System.out.println(2);
 							loginFrame.dispose();
-							
+							//新建主窗口
 							MainPanel mainpanel = new MainPanel((Member)message.getObject());//新建好友列表页面
 							mainpanel.setVisible(true);
-<<<<<<< HEAD
 							ThreadMap.addThreadMap("mainpanel", mainpanel);
-=======
->>>>>>> origin/master
+
 							
 							
 						}else if("rbpwd".equals(message.getCmd())){
@@ -89,11 +85,12 @@ public class ClientThread extends Thread{
 					case GROUPMESSAGE:
 						GroupChat groupChat = (GroupChat) ThreadMap.getThreadMap("groupChat");
 						String txt = "" + message.getFromMember().getName()+"\n"+message.getObject()+"\n";
-						groupChat.setJTextFIeld1Text(txt);
+						groupChat.setJTextFIeld1Text(message.getSendTime(),txt);
 						break;
 					case FRIENDLOGIN:
-						
-						MainPanel.listModel((ArrayList)message.getObject());
+					case REFRESH:
+						FriendList.setFriendList((ArrayList)message.getObject());
+						MainPanel.listModel((ArrayList<Member>)FriendList.getFriendListAll());
 						break;
 					default:
 						break;

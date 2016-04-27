@@ -1,6 +1,6 @@
-package hello.dao;
+package hello.server.dao;
 
-import hello.util.JDBCUtils;
+import hello.server.util.JDBCUtils;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

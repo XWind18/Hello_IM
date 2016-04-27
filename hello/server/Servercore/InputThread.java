@@ -1,17 +1,16 @@
-package hello.Servercore;
+package hello.server.Servercore;
 
-import hello.common.TranObject;
-import hello.common.TranObjectType;
-import hello.dao.手机dao;
-import hello.dao.改密码dao;
-import hello.dao.注册dao;
-import hello.dao.登录dao;
 import hello.entity.Member;
-import hello.util.JDBCUtils;
+import hello.entity.TranObject;
+import hello.entity.TranObjectType;
+import hello.server.dao.手机dao;
+import hello.server.dao.改密码dao;
+import hello.server.dao.注册dao;
+import hello.server.dao.登录dao;
+import hello.server.util.JDBCUtils;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
@@ -77,17 +76,14 @@ public class InputThread extends Thread{
 			if (yz) {
 				objReg.setCmd("rbid");
 				objReg.setObject("该手机号已注册");
-				System.out.println(2);
 			} else {
 				boolean saveFlag = daoRegister.inSert(memberReg.getName(), memberReg.getLoginPwd(),
 						memberReg.getSex(), memberReg.getAge(), memberReg.getPhone());
 				objReg.setCmd("txts");
 				if (saveFlag) {
 					objReg.setObject("注册成功");
-					System.out.println(3);
 				} else {
 					objReg.setObject("注册失败");
-					System.out.println(4);
 				}
 			}
 			out.setMessage(objReg);
@@ -106,39 +102,34 @@ public class InputThread extends Thread{
 				if (pwd.equals(member.getLoginPwd())) {
 					System.out.println("登录成功");
 					sendObject.setCmd("true");
-<<<<<<< HEAD
 					sendObject.setToUser(1);
-=======
->>>>>>> origin/master
 					Member memLogin = JDBCUtils.queryForObject("select * from member where phone = ?", Member.class, member.getPhone());
 					sendObject.setObject(memLogin);
 					memLogin.setLoginPwd("");
 					sendObject.setObject(memLogin);
 					out.setMessage(sendObject);
-					sleep(500);
 					
 					//登录成功处理事件,通知好友上线
 					TranObject loginmessage = new TranObject();
 					loginmessage.setType(TranObjectType.FRIENDLOGIN);
 					loginmessage.setToUser(2);
 					loginmessage.setObject(FriendList.getFriendListAll());
+					map.add(memLogin.getMemberId(), out);
 					List<OutputThread> list = map.getAll();
 					for (OutputThread outputThread : list) {
-						outputThread.setMessage(loginmessage);
-						sleep(500);
+						System.out.println(out.getSocket());
+						System.out.println(outputThread.getSocket());
+						if(out.getSocket().equals(outputThread.getSocket())){
+							outputThread.setMessage(loginmessage);
+						}
 					}
-					map.add(memLogin.getMemberId(), out);
-					
 					//  获取在线好友
 					TranObject getOnlineFriend = new TranObject();
-					getOnlineFriend.setType(TranObjectType.LOGIN);
+					getOnlineFriend.setType(TranObjectType.REFRESH);
 					getOnlineFriend.setToUser(3);
 					getOnlineFriend.setObject(FriendList.getFriendListAll());
 					out.setMessage(getOnlineFriend);
-					
-					
 					FriendList.addFriendList(memLogin);
-					
 				} else {
 					sendObject.setCmd("rbpwd");
 					sendObject.setObject("密码错误");
@@ -162,10 +153,6 @@ public class InputThread extends Thread{
 				ForgetPwdObject.setObject("修改失败");
 			}
 			out.setMessage(ForgetPwdObject);
-
-			
-			
-			
 			break;
 		case GROUPMESSAGE:
 			Member memGroup = readObject.getFromMember();
@@ -184,9 +171,9 @@ public class InputThread extends Thread{
 			System.out.println(map.getAll());
 			break;
 		case MESSAGE:
-			out.setMessage(readObject);
-			String info1=readObject.getFromUser()+" 对 "+readObject.getToUser()+"  "+readObject.getSendTime()+"\n"+readObject.getObject()+"\r\n";
-			System.out.println(info1);
+			
+			
+			
 			break;
 		
 			

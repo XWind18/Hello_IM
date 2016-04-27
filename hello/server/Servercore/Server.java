@@ -1,14 +1,11 @@
-package hello.Servercore;
+package hello.server.Servercore;
 
-import hello.common.Constants;
-import hello.common.MyDate;
-import hello.entity.Member;
+import hello.entity.Constants;
+import hello.entity.MyDate;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 

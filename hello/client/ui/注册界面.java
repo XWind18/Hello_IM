@@ -6,14 +6,14 @@
 
 package hello.client.ui;
 
-import hello.clientcore.ChatMap;
-import hello.clientcore.Client;
-import hello.clientcore.ThreadMap;
-import hello.common.TranObject;
-import hello.common.TranObjectType;
-import hello.dao.手机dao;
-import hello.dao.注册dao;
+import hello.client.clientcore.ChatMap;
+import hello.client.clientcore.Client;
+import hello.client.clientcore.ThreadMap;
 import hello.entity.Member;
+import hello.entity.TranObject;
+import hello.entity.TranObjectType;
+import hello.server.dao.手机dao;
+import hello.server.dao.注册dao;
 
 /**
  *
@@ -452,6 +452,7 @@ public class 注册界面 extends javax.swing.JFrame {
 								Short.MAX_VALUE).addContainerGap()));
 
 		pack();
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	}// </editor-fold>
 	//GEN-END:initComponents
 
