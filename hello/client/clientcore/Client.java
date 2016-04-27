@@ -6,7 +6,7 @@ import java.net.Socket;
 
 public class Client {
 	private Socket socket;
-	private ClientThread clientthread;
+	private ClientThread clientThread;
 	private String ip;
 	private int port;
 	public Client(String ip, int port) {
@@ -19,9 +19,10 @@ public class Client {
 			socket = new Socket();
 			socket.connect(new InetSocketAddress(ip,port),3000);
 			if(socket.isConnected()){
-				clientthread = new ClientThread(socket);
-				clientthread.setStart(true);
-				clientthread.start();
+				clientThread = new ClientThread(socket);
+				ThreadMap.addThreadMap("clientThread", clientThread);
+				clientThread.setStart(true);
+				clientThread.start();
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -31,13 +32,13 @@ public class Client {
 		return true;
 	}
 	public InputThread getInputThread(){
-		return clientthread.getIn();
+		return clientThread.getIn();
 	}
 	public OutputThread getOutputThread(){
-		return clientthread.getOut();
+		return clientThread.getOut();
 	}
 	public void setIstart (boolean isStart){
-		clientthread.getIn().setStart(isStart);
-		clientthread.getOut().setStart(isStart);
+		clientThread.getIn().setStart(isStart);
+		clientThread.getOut().setStart(isStart);
 	}
 }

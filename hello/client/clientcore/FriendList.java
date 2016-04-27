@@ -9,6 +9,9 @@ public class FriendList {
 
 	private static List<Member>  friendList = new ArrayList<Member>();
 
+	public static int getSize(){
+		return friendList.size();
+	}
 	public static void setFriendList(List<Member> friendList) {
 		FriendList.friendList = friendList;
 	}

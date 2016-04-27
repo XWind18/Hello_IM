@@ -7,6 +7,7 @@
 package hello.client.ui;
 
 
+import hello.client.clientcore.FriendList;
 import hello.client.clientcore.ThreadMap;
 import hello.entity.Member;
 import hello.server.dao.ShowMemberDao;
@@ -46,6 +47,7 @@ public class MainPanel extends javax.swing.JFrame {
 				return strings[i];
 			}
 		});
+		listShowMember.validate();
 	}
 	//GEN-BEGIN:initComponents
 	// <editor-fold defaultstate="collapsed" desc="Generated Code">
@@ -220,7 +222,14 @@ public class MainPanel extends javax.swing.JFrame {
 			Object listValue = ((JList) e.getSource()).getSelectedValue();
 			int friendID = Integer.parseInt(listValue.toString().split(" ")[0]);
 			friend.setMemberId(friendID);
-			new ChatPanel().setVisible(true);
+			for (int i = 0; i < FriendList.getSize(); i++) {
+				if(FriendList.getFriendList(i).getMemberId()==friendID){
+					friend = FriendList.getFriendList(i);
+				}
+			}
+			HelloRoom helloRoom = new HelloRoom(mySelf,friend);
+			helloRoom.setVisible(true);
+			ThreadMap.addThreadMap("helloRoom_"+friend.getMemberId(), helloRoom);
 		}
 	}
 

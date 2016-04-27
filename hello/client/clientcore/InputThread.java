@@ -35,7 +35,6 @@ public class InputThread extends Thread{
 	}
 	public TranObject getMessage() {
 		TranObject message = this.message;
-		messageLin = false;
 		synchronized (this) {
 			notify();
 		}
@@ -47,6 +46,7 @@ public class InputThread extends Thread{
 		try {
 			while(isStart){
 				message = (TranObject)ois.readObject();
+				System.out.println(message);
 				messageLin = true;
 				synchronized (this) {
 					wait();

@@ -6,15 +6,13 @@
 
 package hello.client.ui;
 
-import hello.client.clientcore.Client;
+import hello.client.clientcore.ClientThread;
 import hello.client.clientcore.OutputThread;
 import hello.client.clientcore.ThreadMap;
-import hello.entity.Constants;
 import hello.entity.Member;
 import hello.entity.MyDate;
 import hello.entity.TranObject;
 import hello.entity.TranObjectType;
-import hello.server.Servercore.FriendList;
 
 /**
  * 
@@ -253,16 +251,16 @@ public class GroupChat extends javax.swing.JFrame {
 
 	private void txtinpActionPerformed(java.awt.event.ActionEvent evt) {
 		// TODO add your handling code here:
-		Client client = (Client)ThreadMap.getThreadMap("client");
+		ClientThread clientThread = (ClientThread)ThreadMap.getThreadMap("clientThread");
+		OutputThread out = clientThread.getOut();
 		String str = txtinp.getText();//获得输入框的数据
 		TranObject sendMessage = new TranObject();
 		sendMessage.setObject(str);
 		sendMessage.setType(TranObjectType.GROUPMESSAGE);
 		sendMessage.setFromMember(member);
 		sendMessage.setSendTime(MyDate.getDate());
-		OutputThread out = client.getOutputThread();
 		out.setmessage(sendMessage);//将数据发送到服务器
-		jTextField1.setText(jTextField1.getText()+" "+ sendMessage.getSendTime()+"\n"+str);
+		jTextField1.append(member.getName()+" "+ sendMessage.getSendTime()+":\n"+str+"\n");
 		txtinp.setText("");//清空输入框
 	}
 
@@ -275,9 +273,8 @@ public class GroupChat extends javax.swing.JFrame {
 		// TODO add your handling code here:
 
 	}
-	public void setJTextFIeld1Text(String time ,String str){
-		System.out.println(str);
-		jTextField1.setText(jTextField1.getText()+" "+ time+"\n"+str);//设置jTextField1的文本为原来的文本加上服务器发送的数据
+	public void setJTextFIeld1Text(TranObject message){
+		jTextField1.append(message.getFromMember().getName()+" "+ message.getSendTime()+":\n"+message.getObject()+"\n");//设置jTextField1的文本为原来的文本加上服务器发送的数据
 	}
 
 

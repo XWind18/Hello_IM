@@ -102,12 +102,14 @@ public class InputThread extends Thread{
 				if (pwd.equals(member.getLoginPwd())) {
 					System.out.println("登录成功");
 					sendObject.setCmd("true");
-					sendObject.setToUser(1);
+					sendObject.setToUser(member.getMemberId());
 					Member memLogin = JDBCUtils.queryForObject("select * from member where phone = ?", Member.class, member.getPhone());
 					sendObject.setObject(memLogin);
 					memLogin.setLoginPwd("");
 					sendObject.setObject(memLogin);
 					out.setMessage(sendObject);
+					sleep(50);
+					FriendList.addFriendList(memLogin);
 					
 					//登录成功处理事件,通知好友上线
 					TranObject loginmessage = new TranObject();
@@ -117,19 +119,18 @@ public class InputThread extends Thread{
 					map.add(memLogin.getMemberId(), out);
 					List<OutputThread> list = map.getAll();
 					for (OutputThread outputThread : list) {
-						System.out.println(out.getSocket());
-						System.out.println(outputThread.getSocket());
-						if(out.getSocket().equals(outputThread.getSocket())){
+//						if(!out.getSocket().equals(outputThread.getSocket())){
+							loginmessage.setCmd(out.toString());
 							outputThread.setMessage(loginmessage);
-						}
+							outputThread.sleep(100);
+//						}
 					}
 					//  获取在线好友
 					TranObject getOnlineFriend = new TranObject();
 					getOnlineFriend.setType(TranObjectType.REFRESH);
-					getOnlineFriend.setToUser(3);
 					getOnlineFriend.setObject(FriendList.getFriendListAll());
+					getOnlineFriend.setToUser(member.getMemberId());
 					out.setMessage(getOnlineFriend);
-					FriendList.addFriendList(memLogin);
 				} else {
 					sendObject.setCmd("rbpwd");
 					sendObject.setObject("密码错误");
@@ -171,12 +172,10 @@ public class InputThread extends Thread{
 			System.out.println(map.getAll());
 			break;
 		case MESSAGE:
-			
-			
-			
+			OutputThread output = map.getById(readObject.getToUser());
+			output.setMessage(readObject);
 			break;
 		
-			
 		default:
 			break;
 		}

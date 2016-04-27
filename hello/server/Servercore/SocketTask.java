@@ -24,7 +24,7 @@ public class SocketTask implements Runnable{
 		out = new OutputThread(socket , map);
 		in = new InputThread(socket, out, map);
 		out.setStart(true);
-		out.setPriority(9);
+		out.setPriority(6);
 		in.setStart(true);
 		out.start();
 		in.start();

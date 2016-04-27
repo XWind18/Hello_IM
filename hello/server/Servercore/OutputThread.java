@@ -36,9 +36,11 @@ public class OutputThread extends Thread{
 
 	public void setMessage(TranObject message){
 		this.message = message;
-		synchronized (this) {
-			notify();
-		}
+
+			synchronized (this) {
+				notify();
+			}
+
 	}
 	@Override
 	public void run() {
