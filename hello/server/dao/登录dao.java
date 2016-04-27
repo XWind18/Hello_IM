@@ -58,7 +58,6 @@ public class 登录dao {
 		try {
 			con = JDBCUtils.getConnection();
 			ps =  con.prepareStatement("select phone from member");
-//			ps.setString(1, phone);
 			rs = ps.executeQuery();
 			
 			while(rs.next()){

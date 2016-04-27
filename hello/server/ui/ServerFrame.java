@@ -6,7 +6,6 @@
 
 package hello.server.ui;
 
-import hello.server.Servercore.Server;
 import hello.server.dao.MemberDao;
 
 /**
@@ -15,6 +14,10 @@ import hello.server.dao.MemberDao;
  */
 public class ServerFrame extends javax.swing.JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	/** Creates new form ServerFrame */
 	public ServerFrame() {
 		initComponents();
@@ -175,20 +178,6 @@ public class ServerFrame extends javax.swing.JFrame {
 	/**
 	 * @param args the command line arguments
 	 */
-	public static void main(String args[]) {
-		java.awt.EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				new ServerFrame().setVisible(true);
-				
-			}
-
-		});
-		new Server().start();
-		
-	}
-	public void showQuery (String message){
-		
-	}
 
 	//GEN-BEGIN:variables
 	// Variables declaration - do not modify

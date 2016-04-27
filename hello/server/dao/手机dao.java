@@ -14,11 +14,7 @@ public class 手机dao {
 	public boolean shouji(String mobiles){
 //		 ^1[3|4|5|8][0-9]\d{8}$
 		Pattern p = Pattern.compile("^((13[0-9])|(15[^4,\\D])|(18[0,5-9]))\\d{8}$");  
-
 		Matcher m = p.matcher(mobiles);  
-
-//		System.out.println(m.matches()+"---");  
-
 		return m.matches();  
 	}
 	public boolean yanzheng(String i){
@@ -26,7 +22,6 @@ public class 手机dao {
 		Connection con = null;
 		Statement st = null;
 		ResultSet rs = null;
-		
 		try {
 			con = JDBCUtils.getConnection();
 			st = con.createStatement();
@@ -35,23 +30,17 @@ public class 手机dao {
 				String phone =rs.getString("phone");
 				if(phone != null){
 					if(phone.equals(i)){
-						
 						flag = true;
 					}else{
 						flag = false;
 					}
-					
 				}
 			}
-			
 			JDBCUtils.close(rs, st, con);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 		return flag;
-		
 	}
-	
 }

@@ -10,24 +10,6 @@ import java.util.Date;
 
 public class 注册dao {
 	
-//	public static void main(String[] args) {
-//		 
-//		Connection con = null;
-//		PreparedStatement st = null;
-//		con = JDBCUtils.getConnection();
-//		
-//		String sql = "insert into member(id,name,password,sex,age,phone) values(?,?,?,?,?,?)";
-//		 
-//		try {
-//			st = con.prepareStatement(sql);
-//			st.executeUpdate();
-//			JDBCUtils.close(null, st, con);
-//			
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//		
-//	}
 	
 	public boolean inSert(String name,String password,String sex,int age,String phone){
 

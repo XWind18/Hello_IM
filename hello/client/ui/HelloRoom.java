@@ -29,10 +29,7 @@ public class HelloRoom extends JFrame implements ActionListener {
 	Member toMember;
 	String ownerId;
 	String friendId;
-//	public static void main(String[] args) {
-//		// TODO Auto-generated method stub
-//		HelloRoom qqChat=new HelloRoom("1","1");
-//	}
+
 	public HelloRoom(Member myself, Member toMember)
 	{
 		this.myself = myself;

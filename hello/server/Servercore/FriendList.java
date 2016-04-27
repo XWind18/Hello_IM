@@ -8,11 +8,12 @@ import java.util.List;
 public class FriendList {
 
 	private static List<Member>  friendList = new ArrayList<Member>();
-	
-	
-
-	
-	
+	public static int getSize(){
+		return friendList.size();
+	}
+	public static void setFriendList(List<Member> friendList) {
+		FriendList.friendList = friendList;
+	}
 	public static Member getFriendList(int index){
 		if(friendList.size()>0){
 			return friendList.get(index);
@@ -24,7 +25,6 @@ public class FriendList {
 			friendList.add(member);
 		}
 	}
-	
 	public static List<Member> getFriendListAll(){
 		return friendList;
 	}

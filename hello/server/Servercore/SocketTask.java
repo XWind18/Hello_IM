@@ -1,8 +1,6 @@
 package hello.server.Servercore;
 
 
-import hello.server.ui.ServerFrame;
-
 import java.net.Socket;
 
 

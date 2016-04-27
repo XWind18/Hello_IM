@@ -6,7 +6,6 @@
 
 package hello.client.ui;
 
-import hello.client.clientcore.ChatMap;
 import hello.client.clientcore.Client;
 import hello.client.clientcore.ThreadMap;
 import hello.entity.Member;
@@ -489,17 +488,6 @@ public class RegisterFrame extends javax.swing.JFrame {
 	}
 
 	private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
-		// TODO add your handling code here:
-		//		提交
-		//		String pwd1 = this.txtpwd.getText();
-		//		String pwd2 = this.txtnewpwd.getText();
-		//		
-		//		if (!pwd1.equals(pwd2)) {
-		//			this.lblTip.setText("两次密码不一致");
-		//
-		//		} else {
-		//
-		//		}
 		Member member = new Member();
 		this.rbid.setText("");
 		this.rbpwd.setText("");
@@ -545,42 +533,19 @@ public class RegisterFrame extends javax.swing.JFrame {
 			member.setSex(sex);
 			member.setName(name);
 			member.setAge(age);
-			
 			TranObject sendObject = new TranObject();
 			sendObject.setType(TranObjectType.REGISTER);
 			sendObject.setObject(member);
-			
-			Client client = (Client)ChatMap.getChatMap("client");
+			Client client = (Client)ThreadMap.getThreadMap("client");
 			client.getOutputThread().setmessage(sendObject);
-
-			
-//			boolean saveFlag = dao.inSert(name, pwd, sex, age, phone);
-//			if (saveFlag) {
-//				this.txts.setText("注册成功");
-////				new 登录界面().setVisible(true);
-////				this.dispose();
-//			} else {
-//				this.txts.setText("注册失败");
-//
-//			}
 		} catch (Exception e) {
 			// TODO: handle exception
-//			System.out.println("注册失败");
 			e.printStackTrace();
-
 		}
 	}
-
 	/**
 	 * @param args the command line arguments
 	 */
-//	public static void main(String args[]) {
-//		java.awt.EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				new 注册界面().setVisible(true);
-//			}
-//		});
-//	}
 
 	//GEN-BEGIN:variables
 	// Variables declaration - do not modify

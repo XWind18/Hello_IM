@@ -6,17 +6,13 @@ import hello.server.util.JDBCUtils;
 import java.util.Iterator;
 import java.util.List;
 
-import org.junit.Test;
-
-//import org.junit.Test;
-
 
 public class MemberDao {
 	public int delete(int id){
 		String sql = "delete from member where memberId = ?";
 		return JDBCUtils.update(sql, id);
 	}
-@Test
+
 	public String query(){
 		String result = "";
 		String sql = "select * from member";

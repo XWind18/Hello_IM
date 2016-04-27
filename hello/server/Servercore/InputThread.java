@@ -1,7 +1,6 @@
 package hello.server.Servercore;
 
 import hello.entity.Member;
-import hello.entity.MyDate;
 import hello.entity.TranObject;
 import hello.entity.TranObjectType;
 import hello.server.dao.手机dao;
@@ -124,19 +123,6 @@ public class InputThread extends Thread{
 							sleep(100);
 						}
 					}
-					
-//					loginmessage.setToUser(2);
-//					System.out.println("flist:"+FriendList.getFriendListAll());
-//						loginmessage.setSendTime(MyDate.getDate());
-//							loginmessage.setCmd(out.toString());
-//							System.out.println("server:"+loginmessage);
-//							
-//					//  获取在线好友
-//					TranObject getOnlineFriend = new TranObject();
-//					getOnlineFriend.setType(TranObjectType.REFRESH);
-//					getOnlineFriend.setObject(FriendList.getFriendListAll());
-//					getOnlineFriend.setToUser(member.getMemberId());
-//					out.setMessage(getOnlineFriend);
 				} else {
 					sendObject.setCmd("rbpwd");
 					sendObject.setObject("密码错误");
@@ -144,7 +130,7 @@ public class InputThread extends Thread{
 				}
 			} else {
 				sendObject.setCmd("rbid");
-				sendObject.setObject("账号不存在");
+				sendObject.setObject("账号不存在");	
 				out.setMessage(sendObject);
 			}
 			break;
@@ -165,17 +151,13 @@ public class InputThread extends Thread{
 			Member memGroup = readObject.getFromMember();
 			if(map.getById(memGroup.getMemberId()) == null){
 				map.add(memGroup.getMemberId(), out);
-				System.out.println(23);
 			}
 			ArrayList<OutputThread> list = (ArrayList<OutputThread>) map.getAll();
 			for (OutputThread outputThread : list) {
 				if(!outputThread.equals(out)){
 					outputThread.setMessage(readObject);
-					System.out.println(4);
 				}
 			}
-			System.out.println(1);
-			System.out.println(map.getAll());
 			break;
 		case MESSAGE:
 			OutputThread output = map.getById(readObject.getToUser());

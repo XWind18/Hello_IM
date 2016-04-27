@@ -6,7 +6,6 @@
 
 package hello.client.ui;
 
-import hello.client.clientcore.ChatMap;
 import hello.client.clientcore.Client;
 import hello.client.clientcore.ThreadMap;
 import hello.entity.Member;
@@ -205,7 +204,7 @@ public class ForgetPwd extends javax.swing.JFrame {
 		TranObject forgetPwd = new TranObject();
 		forgetPwd.setType(TranObjectType.FORGETPWD);
 		forgetPwd.setObject(member);
-		Client client = (Client)ChatMap.getChatMap("client");
+		Client client = (Client)ThreadMap.getThreadMap("client");
 		client.getOutputThread().setmessage(forgetPwd);
 	}
 
@@ -220,15 +219,6 @@ public class ForgetPwd extends javax.swing.JFrame {
 	/**
 	 * @param args the command line arguments
 	 */
-//	public static void main(String args[]) {
-//		java.awt.EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				new 找回密码().setVisible(true);
-//			}
-//		});
-//	}
-	
-	
 
 	//GEN-BEGIN:variables
 	// Variables declaration - do not modify

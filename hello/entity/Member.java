@@ -1,7 +1,6 @@
 package hello.entity;
 
 import java.io.Serializable;
-import java.math.BigInteger;
 import java.util.Date;
 
 public class Member  implements Serializable{
@@ -20,7 +19,6 @@ public class Member  implements Serializable{
 	private int age;
 	private Date time;
 	private int statu;
-	private String ip;
 	private String phone;
 	
 	
@@ -67,15 +65,6 @@ public class Member  implements Serializable{
 	public void setStatu(int statu) {
 		this.statu = statu;
 	}
-	
-	public String getIp() {
-		return ip;
-	}
-	public void setIp(String ip) {
-		this.ip = ip;
-	}
-	
-	
 	public String getPhone() {
 		return phone;
 	}

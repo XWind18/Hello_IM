@@ -29,12 +29,7 @@ public class GroupChat extends javax.swing.JFrame {
 		return member.getMemberId();
 	}
 	/** Creates new form mainJFrame */
-//	public GroupChat() {
-////		client = new CopyOfsocket();//新建一个服务端的连接
-////		Thread thread = new Thread(new jtfwqxx());//给监听事件分配现成
-////		thread.start();
-//		initComponents();
-//	}
+
 	public GroupChat(Member member){
 		this.member = member;
 		initComponents();
@@ -283,19 +278,7 @@ public class GroupChat extends javax.swing.JFrame {
 	 * @param args
 	 *            the command line arguments
 	 */
-//	public static void main(String args[]) {
-//		java.awt.EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				GroupChat groupChat = new GroupChat();
-//				groupChat.setVisible(true);
-//				ThreadMap.addThreadMap("groupChat", groupChat);
-//			}
-//		});
-//		Client client= new Client(Constants.SERVER_IP, Constants.SERVER_PORT);
-//		client.start();
-//		ThreadMap.addThreadMap("client", client);
-//		
-//	}
+
 
 	// GEN-BEGIN:variables
 	// Variables declaration - do not modify

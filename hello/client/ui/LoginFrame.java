@@ -6,7 +6,6 @@
 
 package hello.client.ui;
 
-import hello.client.clientcore.ChatMap;
 import hello.client.clientcore.Client;
 import hello.client.clientcore.ThreadMap;
 import hello.entity.Constants;
@@ -259,7 +258,7 @@ public class LoginFrame extends javax.swing.JFrame {
 		sendObject.setType(TranObjectType.LOGIN);
 		sendObject.setObject(member);
 
-		Client client = (Client) ChatMap.getChatMap("client");
+		Client client = (Client) ThreadMap.getThreadMap("client");
 		client.getOutputThread().setmessage(sendObject);
 	}
 
@@ -276,7 +275,7 @@ public class LoginFrame extends javax.swing.JFrame {
 		});
 		Client client = new Client(Constants.SERVER_IP, Constants.SERVER_PORT);
 		client.start();
-		ChatMap.addChatMap("client", client);
+		ThreadMap.addThreadMap("client", client);
 
 	}
 

@@ -14,6 +14,10 @@ import hello.server.dao.MemberDao;
  */
 public class DeleteMemberFrame extends javax.swing.JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	/** Creates new form DeleteMemberFrame */
 	public DeleteMemberFrame() {
 		initComponents();
@@ -137,13 +141,6 @@ public class DeleteMemberFrame extends javax.swing.JFrame {
 	/**
 	 * @param args the command line arguments
 	 */
-	//	public static void main(String args[]) {
-	//		java.awt.EventQueue.invokeLater(new Runnable() {
-	//			public void run() {
-	//				new DeleteMemberFrame().setVisible(true);
-	//			}
-	//		});
-	//	}
 
 	//GEN-BEGIN:variables
 	// Variables declaration - do not modify
