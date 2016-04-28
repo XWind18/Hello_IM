@@ -1,15 +1,12 @@
 package hello.server.Servercore;
 
 import hello.entity.Member;
-import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class FriendList implements Serializable{
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+public class FriendList {
+
 	private static List<Member>  friendList = new ArrayList<Member>();
 	public static int getSize(){
 		return friendList.size();
@@ -30,13 +27,5 @@ public class FriendList implements Serializable{
 	}
 	public static List<Member> getFriendListAll(){
 		return friendList;
-	}
-	public static void removeFriendList(int idLogout){
-		for (int i = 0; i < getSize(); i++) {
-			if(friendList.get(i).getMemberId()==(idLogout)){
-				friendList.remove(i);
-				break;
-			}
-		}
 	}
 }

@@ -8,8 +8,23 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class 登录dao {
-	
-
+	public static void main(String[] args) {
+		 
+		Connection con = null;
+		PreparedStatement st = null;
+		con = JDBCUtils.getConnection();
+//		查	select * from 表 where 字段 like '%值%'
+		String sql = "select password  from t_zhuce where phone=?";
+		 
+		try {
+			st = con.prepareStatement(sql);
+			st.executeUpdate();
+			JDBCUtils.close(null, st, con);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+}
 	public String Select(String phone){
 		
 		Connection con = null;
