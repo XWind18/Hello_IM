@@ -508,10 +508,16 @@ public class RegisterFrame extends javax.swing.JFrame {
 			name = this.txtname.getText().toString();
 			pwd = this.txtpwd.getText().toString();
 			newpwd = this.txtnewpwd.getText().toString();
-			if(this.txtage.getText() != null || this.txtage.getText() != ""){
+			System.out.println(this.txtage.getText());
+			String ageStr = this.txtage.getText();
+			if(ageStr.matches("[0-9]+")){
 				age = Integer.parseInt(this.txtage.getText());
 			}
 			phone = this.txtid.getText().toString();
+			if("".equals(pwd)){
+				this.rbpwd.setText("密码不能为空");
+				return;
+			}
 			if (pwd.equals(newpwd)) {	
 				member.setLoginPwd(pwd);	
 			} else {
@@ -519,7 +525,6 @@ public class RegisterFrame extends javax.swing.JFrame {
 				pwd = null;
 				return;
 			}
-			注册dao dao = new 注册dao();
 			手机dao da = new 手机dao();
 			boolean sh = da.shouji(phone);
 			String ti2 = sh ? "" : "手机号码出错";

@@ -21,6 +21,7 @@ public class InputThread extends Thread{
 	private TranObject message;
 	private boolean isStart;
 	private boolean messageLin = false;
+	private Member myself;
 
 	public boolean isMessageLin() {
 		return messageLin;
@@ -90,7 +91,8 @@ public class InputThread extends Thread{
 				//  登录成功
 				loginFrame.dispose();
 				//新建主窗口
-				MainPanel mainpanel = new MainPanel((Member)message.getObject());//新建好友列表页面
+				myself = (Member)message.getObject();
+				MainPanel mainpanel = new MainPanel(myself);//新建好友列表页面
 				mainpanel.setVisible(true);
 				ThreadMap.addThreadMap("mainpanel", mainpanel);
 				getFriendList();
@@ -111,6 +113,9 @@ public class InputThread extends Thread{
 			Member mySelf = null;
 			if(ThreadMap.getThreadMap("helloRoom_"+message.getFromUser()) != null){
 				helloRoom = (HelloRoom)ThreadMap.getThreadMap("helloRoom_"+message.getFromUser());
+				if(!helloRoom.isVisible()){
+					helloRoom.setVisible(true);
+				}
 			}else{
 				for (int i = 0; i < FriendList.getSize(); i++) {
 					if(FriendList.getFriendList(i).getMemberId()==message.getFromUser()){
@@ -134,8 +139,20 @@ public class InputThread extends Thread{
 			break;
 			
 		case GROUPMESSAGE:
-			GroupChat groupChat = (GroupChat) ThreadMap.getThreadMap("groupChat");
-			groupChat.setJTextFIeld1Text(message);
+			GroupChat groupChat = null;
+			if(ThreadMap.getThreadMap("groupChat") != null){
+				groupChat = (GroupChat) ThreadMap.getThreadMap("groupChat");
+				if(!groupChat.isVisible()){
+					groupChat.setVisible(true);
+				}
+			}else{
+				groupChat = new GroupChat(myself);
+				groupChat.setVisible(true);
+				ThreadMap.addThreadMap("groupChat", groupChat);
+			}
+			if(groupChat != null){
+				groupChat.setJTextFIeld1Text(message);
+			}
 			break;
 		case FRIENDLOGIN:
 			for (int i = 0; i < FriendList.getSize(); i++) {
@@ -148,7 +165,6 @@ public class InputThread extends Thread{
 			MainPanel.listModel((ArrayList<Member>)FriendList.getFriendListAll());
 			break;
 		case REFRESH:
-//			System.out.println("client:"+message);
 			FriendList.setFriendList((ArrayList)message.getObject());
 			if(FriendList.getSize()>0){
 				MainPanel.listModel((ArrayList<Member>)FriendList.getFriendListAll());

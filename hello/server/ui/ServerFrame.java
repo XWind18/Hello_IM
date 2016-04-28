@@ -6,6 +6,7 @@
 
 package hello.server.ui;
 
+import hello.server.Servercore.Server;
 import hello.server.dao.MemberDao;
 
 /**
@@ -173,6 +174,17 @@ public class ServerFrame extends javax.swing.JFrame {
 	}
 	public void showMessage(String message){
 		txtInfo.append(message);
+	}
+	public static void main(String args[]) {
+		java.awt.EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				new ServerFrame().setVisible(true);
+				
+			}
+
+		});
+		new Server().start();
+		
 	}
 
 	/**

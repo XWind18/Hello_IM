@@ -27,6 +27,7 @@ public class GroupChat extends javax.swing.JFrame {
 
 	public int getMemberId() {
 		return member.getMemberId();
+
 	}
 	/** Creates new form mainJFrame */
 
@@ -47,7 +48,7 @@ public class GroupChat extends javax.swing.JFrame {
 		jScrollPane1 = new javax.swing.JScrollPane();
 		jTextField1 = new javax.swing.JTextArea();
 		jMenuBar1 = new javax.swing.JMenuBar();
-
+		setTitle(member.getName()+"的群聊");
 		jTextField1.setColumns(20);
 		jTextField1.setRows(5);
 		jScrollPane1.setViewportView(jTextField1);
@@ -252,6 +253,7 @@ public class GroupChat extends javax.swing.JFrame {
 		TranObject sendMessage = new TranObject();
 		sendMessage.setObject(str);
 		sendMessage.setType(TranObjectType.GROUPMESSAGE);
+		sendMessage.setFromUser(member.getMemberId());
 		sendMessage.setFromMember(member);
 		sendMessage.setSendTime(MyDate.getDate());
 		out.setmessage(sendMessage);//将数据发送到服务器

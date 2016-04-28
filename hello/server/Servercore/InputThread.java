@@ -149,9 +149,9 @@ public class InputThread extends Thread{
 			break;
 		case GROUPMESSAGE:
 			Member memGroup = readObject.getFromMember();
-			if(map.getById(memGroup.getMemberId()) == null){
-				map.add(memGroup.getMemberId(), out);
-			}
+//			if(map.getById(readObject.getFromUser()) == null){
+//				map.add(memGroup.getMemberId(), out);
+//			}
 			ArrayList<OutputThread> list = (ArrayList<OutputThread>) map.getAll();
 			for (OutputThread outputThread : list) {
 				if(!outputThread.equals(out)){
