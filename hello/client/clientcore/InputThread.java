@@ -9,6 +9,7 @@ import hello.client.ui.RegisterFrame;
 import hello.entity.Member;
 import hello.entity.TranObject;
 import hello.entity.TranObjectType;
+import hello.server.Servercore.OutputThread;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -71,7 +72,7 @@ public class InputThread extends Thread{
 	}
 	public void readMessage() throws Exception{
 		TranObject message = (TranObject) ois.readObject();
-		System.out.println(message);
+//		System.out.println(message);
 		switch(message.getType()){
 		case REGISTER:
 			RegisterFrame RegisterFrame = new RegisterFrame();
@@ -104,8 +105,10 @@ public class InputThread extends Thread{
 			break;
 			
 		case FORGETPWD:
-			ForgetPwd forgetPwd = (ForgetPwd)ThreadMap.getThreadMap("fotgetPwd");
-			forgetPwd.setJxgTxt((String) message.getObject());
+			ForgetPwd forgetPwd = (ForgetPwd)ThreadMap.getThreadMap("forgetPwd");
+			String str = (String)message.getObject();
+			forgetPwd.setJxgTxt(str);
+//			forgetPwd.setJxgTxt((String) message.getObject());
 			break;
 		case MESSAGE:
 			HelloRoom helloRoom = null;
@@ -155,13 +158,9 @@ public class InputThread extends Thread{
 			}
 			break;
 		case FRIENDLOGIN:
-			for (int i = 0; i < FriendList.getSize(); i++) {
-				if(FriendList.getFriendList(i).equals((Member)message.getObject())){
-					break;
-				}
+			if(isExistMember((Member)message.getObject())){
+				FriendList.addFriendList((Member) message.getObject());
 			}
-				
-			FriendList.addFriendList((Member) message.getObject());
 			MainPanel.listModel((ArrayList<Member>)FriendList.getFriendListAll());
 			break;
 		case REFRESH:
@@ -169,6 +168,17 @@ public class InputThread extends Thread{
 			if(FriendList.getSize()>0){
 				MainPanel.listModel((ArrayList<Member>)FriendList.getFriendListAll());
 			}
+			break;
+		case FRIENDLOGOUT:
+			int idLogout = message.getFromUser();
+			if(idLogout == myself.getMemberId()){
+				Client client = (Client)ThreadMap.getThreadMap("client");
+				client.setIstart(false);
+				sleep(20);
+				return;
+			}
+			FriendList.removeFriendList(idLogout);
+			MainPanel.listModel((ArrayList<Member>)FriendList.getFriendListAll());
 			break;
 		default:
 			break;
@@ -179,5 +189,13 @@ public class InputThread extends Thread{
 		getOnlineFriend.setType(TranObjectType.REFRESH); 
 		ClientThread clientThread = (ClientThread)ThreadMap.getThreadMap("clientThread");
 		clientThread.getOut().setmessage(getOnlineFriend);		
+	}
+	public boolean isExistMember(Member member){
+		for (int i = 0; i < FriendList.getSize(); i++) {
+			if(FriendList.getFriendList(i).getMemberId()==(member.getMemberId())){
+				return false;
+			}
+		}
+		return true;
 	}
 }

@@ -7,6 +7,7 @@
 package hello.client.ui;
 
 
+import hello.client.clientcore.Client;
 import hello.client.clientcore.ClientThread;
 import hello.client.clientcore.FriendList;
 import hello.client.clientcore.ThreadMap;
@@ -14,8 +15,12 @@ import hello.entity.Member;
 import hello.entity.TranObject;
 import hello.entity.TranObjectType;
 import hello.server.dao.ShowMemberDao;
+
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+
 import javax.swing.JButton;
 import javax.swing.JList;
 
@@ -207,6 +212,13 @@ public class MainPanel extends javax.swing.JFrame {
 										Short.MAX_VALUE)));
 
 		pack();
+		this.addWindowListener(new WindowAdapter()
+		{
+		public void windowClosing(WindowEvent e)
+		{
+			close();
+		}
+		});
 	}// </editor-fold>
 	//GEN-END:initComponents
 	//群聊
@@ -247,6 +259,14 @@ public class MainPanel extends javax.swing.JFrame {
 		getOnlineFriend.setType(TranObjectType.REFRESH); 
 		ClientThread clientThread = (ClientThread)ThreadMap.getThreadMap("clientThread");
 		clientThread.getOut().setmessage(getOnlineFriend);		
+	}
+	public void close(){
+		TranObject logoutMessage = new TranObject();
+		logoutMessage.setType(TranObjectType.FRIENDLOGOUT);
+		logoutMessage.setFromUser(mySelf.getMemberId());
+		Client client = (Client)ThreadMap.getThreadMap("client");
+		client.getOutputThread().setmessage(logoutMessage);
+		
 	}
 
 	/**

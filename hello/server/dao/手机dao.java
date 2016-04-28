@@ -18,7 +18,7 @@ public class 手机dao {
 		return m.matches();  
 	}
 	public boolean yanzheng(String i){
-		boolean flag = false;
+		boolean flag = true;
 		Connection con = null;
 		Statement st = null;
 		ResultSet rs = null;
@@ -31,6 +31,7 @@ public class 手机dao {
 				if(phone != null){
 					if(phone.equals(i)){
 						flag = true;
+						return flag;
 					}else{
 						flag = false;
 					}

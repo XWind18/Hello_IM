@@ -1,5 +1,6 @@
 package hello.server.Servercore;
 
+import hello.client.clientcore.FriendList;
 import hello.entity.Member;
 import hello.entity.TranObject;
 import hello.entity.TranObjectType;
@@ -100,6 +101,7 @@ public class InputThread extends Thread{
 			if (ph) {
 				
 				if (pwd.equals(member.getLoginPwd())) {
+					
 					System.out.println("登录成功");
 					sendObject.setCmd("true");
 					sendObject.setToUser(member.getMemberId());
@@ -108,8 +110,10 @@ public class InputThread extends Thread{
 					memLogin.setLoginPwd("");
 					sendObject.setObject(memLogin);
 					out.setMessage(sendObject);
-					sleep(50);
-					FriendList.addFriendList(memLogin);
+//					sleep(50);
+					if(isExistMember(memLogin)){
+						FriendList.addFriendList(memLogin);
+					}
 					map.add(memLogin.getMemberId(), out);
 					
 					//登录成功处理事件,通知好友上线
@@ -120,7 +124,7 @@ public class InputThread extends Thread{
 					for (OutputThread outputThread : list) {
 						if(!out.getSocket().equals(outputThread.getSocket())){
 							outputThread.setMessage(loginmessage);
-							sleep(100);
+//							sleep(50);
 						}
 					}
 				} else {
@@ -137,6 +141,7 @@ public class InputThread extends Thread{
 		case FORGETPWD:
 			Member memForgetPwd = (Member)readObject.getObject();
 			TranObject ForgetPwdObject = new TranObject();
+			ForgetPwdObject.setType(TranObjectType.FORGETPWD);
 			改密码dao daoForget = new 改密码dao();
 			boolean gm = daoForget.upDate(memForgetPwd.getLoginPwd(), memForgetPwd.getPhone());
 			ForgetPwdObject.setCmd("jxg");
@@ -169,9 +174,31 @@ public class InputThread extends Thread{
 			getOnlineFriend.setObject(FriendList.getFriendListAll());
 			out.setMessage(getOnlineFriend);
 			break;
+		case FRIENDLOGOUT:
+			int idLogout = readObject.getFromUser();
+			FriendList.removeFriendList(idLogout);
+			ArrayList<OutputThread> outList = (ArrayList<OutputThread>) map.getAll();
+			for (OutputThread outputThread : outList) {
+				outputThread.setMessage(readObject);
+				if(outputThread.equals(out)){
+					map.remove(idLogout);
+					sleep(10);
+					out.setStart(false);
+				}
+			}
+			isStart = false;			
+			break;
 		default:
 			break;
 		}
+	}
+	public boolean isExistMember(Member member){
+		for (int i = 0; i < FriendList.getSize(); i++) {
+			if(FriendList.getFriendList(i).getMemberId()==(member.getMemberId())){
+				return false;
+			}
+		}
+		return true;
 	}
 	
 	
