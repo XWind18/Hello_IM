@@ -19,7 +19,6 @@ public class ServerFrame extends javax.swing.JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
 	/** Creates new form ServerFrame */
 	public ServerFrame() {
 		initComponents();
@@ -63,10 +62,8 @@ public class ServerFrame extends javax.swing.JFrame {
 						.createSequentialGroup()
 						.addContainerGap()
 						.addComponent(jScrollPane1,
-								javax.swing.GroupLayout.PREFERRED_SIZE, 442,
-								javax.swing.GroupLayout.PREFERRED_SIZE)
-						.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE,
-								Short.MAX_VALUE)));
+								javax.swing.GroupLayout.DEFAULT_SIZE, 370,
+								Short.MAX_VALUE).addGap(15, 15, 15)));
 		panelInfoLayout.setVerticalGroup(panelInfoLayout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
 				panelInfoLayout
@@ -98,7 +95,7 @@ public class ServerFrame extends javax.swing.JFrame {
 				panelbtnLayout.createSequentialGroup().addGap(26, 26, 26)
 						.addComponent(btnQuery).addGap(52, 52, 52)
 						.addComponent(btnDelete)
-						.addContainerGap(274, Short.MAX_VALUE)));
+						.addContainerGap(205, Short.MAX_VALUE)));
 		panelbtnLayout
 				.setVerticalGroup(panelbtnLayout
 						.createParallelGroup(
@@ -172,23 +169,22 @@ public class ServerFrame extends javax.swing.JFrame {
 		MemberDao dao = new MemberDao();
 		String str = dao.query();
 		showMessage(str);
-
+		
+		
 	}
-
-	public void showMessage(String message) {
+	public void showMessage(String message){
 		txtInfo.append(message);
 	}
-
 	public static void main(String args[]) {
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				new ServerFrame().setVisible(true);
-
+				
 			}
 
 		});
 		new Server().start();
-
+		
 	}
 
 	/**

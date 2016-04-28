@@ -51,7 +51,7 @@ public class OutputThread extends Thread{
 					wait();
 				}
 				if(message != null){
-//					System.out.println(message);
+					System.out.println(message);
 					oos.writeObject(message);
 					oos.flush();
 				}

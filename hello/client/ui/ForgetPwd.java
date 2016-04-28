@@ -197,10 +197,9 @@ public class ForgetPwd extends javax.swing.JFrame {
 		member.setPhone(phone);
 		if (pwd.equals(newpwd)) {
 			member.setLoginPwd(pwd);
+
 		} else {
 			pwd = null;
-			setJxgTxt("两次密码不一致");
-			return;
 		}
 		TranObject forgetPwd = new TranObject();
 		forgetPwd.setType(TranObjectType.FORGETPWD);

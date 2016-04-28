@@ -247,10 +247,6 @@ public class GroupChat extends javax.swing.JFrame {
 
 	private void txtinpActionPerformed(java.awt.event.ActionEvent evt) {
 		// TODO add your handling code here:
-		if("".equals(txtinp.getText())){
-			jTextField1.append("系统消息：发送内容不能为空。\n");
-			return;
-		}
 		ClientThread clientThread = (ClientThread)ThreadMap.getThreadMap("clientThread");
 		OutputThread out = clientThread.getOut();
 		String str = txtinp.getText();//获得输入框的数据
