@@ -68,6 +68,10 @@ public class HelloRoom extends JFrame implements ActionListener {
 		if(e.getSource()==jb)
 		{
 			//如果用户点击了发送按钮
+			if("".equals(jtf.getText())){
+				jta.append("系统消息：发送内容不能为空。\n");
+				return;
+			}
 			TranObject m=new TranObject();
 			m.setType(TranObjectType.MESSAGE);
 			m.setFromUser(myself.getMemberId());
