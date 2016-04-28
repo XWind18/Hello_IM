@@ -6,9 +6,13 @@
 
 package hello.client.ui;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import hello.client.clientcore.Client;
 import hello.client.clientcore.ThreadMap;
 import hello.entity.Member;
+import hello.entity.MyDate;
 import hello.entity.TranObject;
 import hello.entity.TranObjectType;
 import hello.server.dao.手机dao;
@@ -512,8 +516,20 @@ public class RegisterFrame extends javax.swing.JFrame {
 			String ageStr = this.txtage.getText();
 			if(ageStr.matches("[0-9]+")){
 				age = Integer.parseInt(this.txtage.getText());
+			}else{
+				this.txts.setText("年龄必须为阿拉伯数字");
+				return;
 			}
 			phone = this.txtid.getText().toString();
+			boolean sh = shouji(phone);
+			String ti2 = sh ? "" : "手机号码出错";
+			if (sh) {
+				member.setPhone(phone);
+			} else {
+				this.rbid.setText(ti2);
+				phone = null;
+				return;
+			}
 			if("".equals(pwd)){
 				this.rbpwd.setText("密码不能为空");
 				return;
@@ -523,16 +539,6 @@ public class RegisterFrame extends javax.swing.JFrame {
 			} else {
 				this.rbpwd.setText("两次密码不一样");
 				pwd = null;
-				return;
-			}
-			手机dao da = new 手机dao();
-			boolean sh = da.shouji(phone);
-			String ti2 = sh ? "" : "手机号码出错";
-			if (sh) {
-				member.setPhone(phone);
-			} else {
-				this.rbid.setText(ti2);
-				phone = null;
 				return;
 			}
 			member.setSex(sex);
@@ -585,5 +591,11 @@ public class RegisterFrame extends javax.swing.JFrame {
 	}
 	public void setTxtstxt (String str){
 		this.txts.setText(str);
+	}
+	public boolean shouji(String mobiles){
+//		 ^1[3|4|5|8][0-9]\d{8}$
+		Pattern p = Pattern.compile("^((13[0-9])|(15[^4,\\D])|(18[0,5-9]))\\d{8}$");  
+		Matcher m = p.matcher(mobiles);  
+		return m.matches();  
 	}
 }
