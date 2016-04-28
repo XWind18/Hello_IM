@@ -18,6 +18,7 @@ public class Client {
 		try {
 			socket = new Socket();
 			socket.connect(new InetSocketAddress(ip,port),3000);
+			//判断是否有连接  如果有连接就新建一个线程，将线程加入ThreadMap 启动线程
 			if(socket.isConnected()){
 				clientThread = new ClientThread(socket);
 				ThreadMap.addThreadMap("clientThread", clientThread);
