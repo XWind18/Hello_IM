@@ -2,6 +2,7 @@ package hello.server.Servercore;
 
 import hello.entity.Constants;
 import hello.entity.MyDate;
+import hello.server.ui.ServerFrame;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -35,7 +36,9 @@ public class Server {
 			while(isStarted){
 				socket = serverSocket.accept();
 				String ip =  socket.getInetAddress().toString();
-				System.out.println(MyDate.getDateCN()+"用户："+ ip +"已建立连接");
+				String conMessage = MyDate.getDateCN()+"用户："+ ip +"已建立连接.\n";
+				ServerFrame serverFrame = (ServerFrame)ThreadMap.getThreadMap("serverFrame");
+				serverFrame.showMessage(conMessage);
 				if(socket.isConnected()){
 					executorService.execute(new SocketTask(socket));
 				}

@@ -90,7 +90,7 @@ public class Member  implements Serializable{
 		}
 		return "[HelloID：" + memberId + "\t用户名：" + name
 				+ "\t性别：" + sex + "\t年龄：" + age+
-				"\tstatu：" + str + "]";
+				"\tphone：" + phone + "]";
 	}
 	
 	

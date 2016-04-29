@@ -7,6 +7,7 @@
 package hello.server.ui;
 
 import hello.server.Servercore.Server;
+import hello.server.Servercore.ThreadMap;
 import hello.server.dao.MemberDao;
 
 /**
@@ -63,10 +64,8 @@ public class ServerFrame extends javax.swing.JFrame {
 						.createSequentialGroup()
 						.addContainerGap()
 						.addComponent(jScrollPane1,
-								javax.swing.GroupLayout.PREFERRED_SIZE, 442,
-								javax.swing.GroupLayout.PREFERRED_SIZE)
-						.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE,
-								Short.MAX_VALUE)));
+								javax.swing.GroupLayout.DEFAULT_SIZE, 504,
+								Short.MAX_VALUE).addContainerGap()));
 		panelInfoLayout.setVerticalGroup(panelInfoLayout.createParallelGroup(
 				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
 				panelInfoLayout
@@ -98,7 +97,7 @@ public class ServerFrame extends javax.swing.JFrame {
 				panelbtnLayout.createSequentialGroup().addGap(26, 26, 26)
 						.addComponent(btnQuery).addGap(52, 52, 52)
 						.addComponent(btnDelete)
-						.addContainerGap(274, Short.MAX_VALUE)));
+						.addContainerGap(336, Short.MAX_VALUE)));
 		panelbtnLayout
 				.setVerticalGroup(panelbtnLayout
 						.createParallelGroup(
@@ -182,8 +181,9 @@ public class ServerFrame extends javax.swing.JFrame {
 	public static void main(String args[]) {
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				new ServerFrame().setVisible(true);
-
+				ServerFrame serverFrame = new ServerFrame();
+				serverFrame.setVisible(true);
+				ThreadMap.addThreadMap("serverFrame", serverFrame);
 			}
 
 		});

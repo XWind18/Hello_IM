@@ -8,6 +8,7 @@ import hello.server.dao.手机dao;
 import hello.server.dao.改密码dao;
 import hello.server.dao.注册dao;
 import hello.server.dao.登录dao;
+import hello.server.ui.ServerFrame;
 import hello.server.util.JDBCUtils;
 
 import java.io.IOException;
@@ -101,16 +102,16 @@ public class InputThread extends Thread{
 			if (ph) {
 				
 				if (pwd.equals(member.getLoginPwd())) {
-					
-					System.out.println("登录成功");
 					sendObject.setCmd("true");
 					sendObject.setToUser(member.getMemberId());
 					Member memLogin = JDBCUtils.queryForObject("select * from member where phone = ?", Member.class, member.getPhone());
-					sendObject.setObject(memLogin);
 					memLogin.setLoginPwd("");
 					sendObject.setObject(memLogin);
 					out.setMessage(sendObject);
 //					sleep(50);
+					String logMessage = memLogin.getName()+"登录成功。\n";
+					ServerFrame serverFrame = (ServerFrame)ThreadMap.getThreadMap("serverFrame");
+					serverFrame.showMessage(logMessage);
 					if(isExistMember(memLogin)){
 						FriendList.addFriendList(memLogin);
 					}
